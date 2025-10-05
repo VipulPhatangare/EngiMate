@@ -6,56 +6,81 @@ const central_object = {
 
 let selectedBranches = [];
 
-// Toast functionality
-function showToast(message, type = 'info', duration = 4000) {
-    const toastContainer = document.getElementById('toastContainer') || createToastContainer();
+// Toast notification system
+function createToastContainer() {
+    if (!document.getElementById('toast-container')) {
+        const container = document.createElement('div');
+        container.id = 'toast-container';
+        container.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        `;
+        document.body.appendChild(container);
+    }
+}
+
+function showToast(message, type = 'info', duration = 3000) {
+    createToastContainer();
     
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    
-    const iconMap = {
-        'success': '✓',
-        'error': '✕',
-        'warning': '⚠',
-        'info': 'ℹ'
+    const colors = {
+        success: { bg: '#10B981', text: '#ffffff', icon: '✓' },
+        error: { bg: '#EF4444', text: '#ffffff', icon: '✕' },
+        warning: { bg: '#F59E0B', text: '#ffffff', icon: '⚠' },
+        info: { bg: '#3B82F6', text: '#ffffff', icon: 'ℹ' }
     };
     
-    toast.innerHTML = `
-        <span class="toast-icon">${iconMap[type] || 'ℹ'}</span>
-        <span class="toast-message">${message}</span>
-        <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+    const color = colors[type] || colors.info;
+    
+    const toast = document.createElement('div');
+    toast.style.cssText = `
+        background: ${color.bg};
+        color: ${color.text};
+        padding: 12px 16px;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: inherit;
+        font-size: 14px;
+        max-width: 350px;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: all 0.3s ease;
+        pointer-events: auto;
+        word-wrap: break-word;
     `;
     
-    toastContainer.appendChild(toast);
+    toast.innerHTML = `
+        <span style="font-weight: bold; font-size: 16px;">${color.icon}</span>
+        <span>${message}</span>
+    `;
     
-    // Show toast with animation
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 100);
+    const container = document.getElementById('toast-container');
+    container.appendChild(toast);
     
-    // Auto remove toast
+    // Trigger animation
     setTimeout(() => {
-        toast.classList.remove('show');
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(0)';
+    }, 10);
+    
+    // Auto remove
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
         setTimeout(() => {
-            if (toast.parentElement) {
-                toast.remove();
+            if (container.contains(toast)) {
+                container.removeChild(toast);
             }
         }, 300);
     }, duration);
-}
-
-function createToastContainer() {
-    const container = document.createElement('div');
-    container.id = 'toastContainer';
-    container.className = 'toast-container';
-    container.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 9999;
-    `;
-    document.body.appendChild(container);
-    return container;
 }
 
 // DOM elements
@@ -219,6 +244,9 @@ function scrollToResults() {
 async function generateCollegeList(formData) {
     formData.selected_branches = selectedBranches;
     
+    // Show loading toast
+    showToast('Searching for colleges...', 'info', 2000);
+    
     try {
         const response = await fetch('/collegePredictorPCM/College_list', {
             method: 'POST',
@@ -230,10 +258,6 @@ async function generateCollegeList(formData) {
 
         const data = await response.json();
         console.log(data);
-        
-        // Show loading toast
-        showToast('Searching for colleges...', 'info', 2000);
-        
         displayColleges(data, formData);
         
         // Show success toast based on results

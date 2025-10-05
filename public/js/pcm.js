@@ -1,81 +1,4 @@
 
-// Toast notification system
-function createToastContainer() {
-    if (!document.getElementById('toast-container')) {
-        const container = document.createElement('div');
-        container.id = 'toast-container';
-        container.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            pointer-events: none;
-        `;
-        document.body.appendChild(container);
-    }
-}
-
-function showToast(message, type = 'info', duration = 3000) {
-    createToastContainer();
-    
-    const colors = {
-        success: { bg: '#10B981', text: '#ffffff', icon: '✓' },
-        error: { bg: '#EF4444', text: '#ffffff', icon: '✕' },
-        warning: { bg: '#F59E0B', text: '#ffffff', icon: '⚠' },
-        info: { bg: '#3B82F6', text: '#ffffff', icon: 'ℹ' }
-    };
-    
-    const color = colors[type] || colors.info;
-    
-    const toast = document.createElement('div');
-    toast.style.cssText = `
-        background: ${color.bg};
-        color: ${color.text};
-        padding: 12px 16px;
-        border-radius: 6px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-family: inherit;
-        font-size: 14px;
-        max-width: 350px;
-        opacity: 0;
-        transform: translateX(100%);
-        transition: all 0.3s ease;
-        pointer-events: auto;
-        word-wrap: break-word;
-    `;
-    
-    toast.innerHTML = `
-        <span style="font-weight: bold; font-size: 16px;">${color.icon}</span>
-        <span>${message}</span>
-    `;
-    
-    const container = document.getElementById('toast-container');
-    container.appendChild(toast);
-    
-    // Trigger animation
-    setTimeout(() => {
-        toast.style.opacity = '1';
-        toast.style.transform = 'translateX(0)';
-    }, 10);
-    
-    // Auto remove
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            if (container.contains(toast)) {
-                container.removeChild(toast);
-            }
-        }, 300);
-    }, duration);
-}
-
 // Initialize College Swiper
 const collegeSwiper = new Swiper(".collegeSwiper", {
     slidesPerView: 1,
@@ -307,12 +230,12 @@ function selectPlan(planType) {
 
 function proceedToPayment() {
     if (!selectedPlan) {
-        showToast('Please select a plan first', 'warning');
+        alert('Please select a plan first');
         return;
     }
     
     const planName = selectedPlan === 'basic' ? 'Basic Plan (₹500)' : 'Premium Plan (₹1000)';
-    showToast(`Redirecting to payment gateway for ${planName}`, 'info');
+    alert(`Redirecting to payment gateway for ${planName}`);
     // In actual implementation, this would redirect to payment gateway
     // window.location.href = `/payment?plan=${selectedPlan}`;
 }
