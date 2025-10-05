@@ -1,4 +1,55 @@
 
+// Toast functionality
+function showToast(message, type = 'info', duration = 4000) {
+    const toastContainer = document.getElementById('toastContainer') || createToastContainer();
+    
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    const iconMap = {
+        'success': '✓',
+        'error': '✕',
+        'warning': '⚠',
+        'info': 'ℹ'
+    };
+    
+    toast.innerHTML = `
+        <span class="toast-icon">${iconMap[type] || 'ℹ'}</span>
+        <span class="toast-message">${message}</span>
+        <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+    `;
+    
+    toastContainer.appendChild(toast);
+    
+    // Show toast with animation
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+    
+    // Auto remove toast
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.remove();
+            }
+        }, 300);
+    }, duration);
+}
+
+function createToastContainer() {
+    const container = document.createElement('div');
+    container.id = 'toastContainer';
+    container.className = 'toast-container';
+    container.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+    `;
+    document.body.appendChild(container);
+    return container;
+}
 
 async function fetch_university() {
     try {
@@ -59,6 +110,17 @@ async function fetch_city() {
     }
 }
 
+// Smooth scroll to results
+function scrollToResults() {
+    const resultsContainer = document.getElementById('results-container');
+    if (resultsContainer) {
+        resultsContainer.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     fetch_university();
     fetch_city();
@@ -97,13 +159,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const branch = document.getElementById('branch');
 
         if (!university.value) {
-            alert('Please select a Home University');
+            showToast('Please select a Home University', 'warning');
             university.focus();
             return;
         }
         
         if (!branch.value) {
-            alert('Please select a Branch Category');
+            showToast('Please select a Branch Category', 'warning');
             branch.focus();
             return;
         }
@@ -119,6 +181,9 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         console.log(formData);
+        
+        // Show loading toast
+        showToast('Searching for cutoff data...', 'info', 2000);
        
             try {
                 const response = await fetch('/branchwiseCutoffPCM/branch_wise_cutoff', {
@@ -132,9 +197,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 const data = await response.json();
                 // console.log(data);
                 displayResults(data, formData);
+                
+                // Show success toast based on results
+                if (data && data.length > 0) {
+                    showToast(`Found ${data.length} colleges with cutoff data!`, 'success');
+                } else {
+                    showToast('No colleges found matching your criteria.', 'warning');
+                }
+                
+                // Auto scroll to results after data is loaded
+                setTimeout(() => {
+                    scrollToResults();
+                }, 500);
 
             } catch (error) {
                 console.log(error);
+                showToast('An error occurred while fetching cutoff data. Please try again.', 'error');
             }
             
        

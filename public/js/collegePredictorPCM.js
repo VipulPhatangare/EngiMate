@@ -6,6 +6,58 @@ const central_object = {
 
 let selectedBranches = [];
 
+// Toast functionality
+function showToast(message, type = 'info', duration = 4000) {
+    const toastContainer = document.getElementById('toastContainer') || createToastContainer();
+    
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    const iconMap = {
+        'success': '✓',
+        'error': '✕',
+        'warning': '⚠',
+        'info': 'ℹ'
+    };
+    
+    toast.innerHTML = `
+        <span class="toast-icon">${iconMap[type] || 'ℹ'}</span>
+        <span class="toast-message">${message}</span>
+        <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+    `;
+    
+    toastContainer.appendChild(toast);
+    
+    // Show toast with animation
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+    
+    // Auto remove toast
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.remove();
+            }
+        }, 300);
+    }, duration);
+}
+
+function createToastContainer() {
+    const container = document.createElement('div');
+    container.id = 'toastContainer';
+    container.className = 'toast-container';
+    container.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+    `;
+    document.body.appendChild(container);
+    return container;
+}
+
 // DOM elements
 const casteSelect = document.getElementById('caste');
 const tfwsContainer = document.getElementById('tfwsContainer');
@@ -152,6 +204,17 @@ function removeBranch(branchValue) {
     updateSelectedBranchesDisplay();
 }
 
+// Smooth scroll to results
+function scrollToResults() {
+    const resultsContainer = document.getElementById('resultsContainer');
+    if (resultsContainer) {
+        resultsContainer.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+        });
+    }
+}
+
 // Core Functions
 async function generateCollegeList(formData) {
     formData.selected_branches = selectedBranches;
@@ -167,11 +230,27 @@ async function generateCollegeList(formData) {
 
         const data = await response.json();
         console.log(data);
+        
+        // Show loading toast
+        showToast('Searching for colleges...', 'info', 2000);
+        
         displayColleges(data, formData);
+        
+        // Show success toast based on results
+        if (data && data.length > 0) {
+            showToast(`Found ${data.length} colleges matching your criteria!`, 'success');
+        } else {
+            showToast('No colleges found matching your criteria.', 'warning');
+        }
+        
+        // Auto scroll to results after data is loaded
+        setTimeout(() => {
+            scrollToResults();
+        }, 500);
 
     } catch (error) {
         console.log('Error:', error);
-        alert('An error occurred while fetching college data');
+        showToast('An error occurred while fetching college data. Please try again.', 'error');
     }
 }
 

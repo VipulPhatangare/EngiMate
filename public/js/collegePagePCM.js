@@ -30,12 +30,13 @@ async function collegeInfoFetch() {
         
         const result = await response.json();
         const data = result[0];
+        console.log(data);
         document.getElementById('college_name').textContent = data.college_name;
 
         document.getElementById('college_info_content').innerHTML = `
             <div class="info-item">
                 <div class="info-label">College Code</div>
-                <div class="info-value">${data.college_code}</div>
+                <div class="info-value">${data.college_id}</div>
             </div>
             <div class="info-item">
                 <div class="info-label">University</div>
@@ -51,7 +52,6 @@ async function collegeInfoFetch() {
         console.log(error);
     }
 }
-
 
 async function collegeBranchInfo() {
     try {
