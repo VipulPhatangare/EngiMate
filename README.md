@@ -72,7 +72,7 @@ By simplifying the MHT CET admission journey, EngiMate saves time, reduces confu
 
 1. Clone the repository:
    ```bash
-   git clone [repository-url]
+   git clone [https://github.com/VipulPhatangare/EngiMate]
    cd IEEE-Project-engi
    ```
 
@@ -88,7 +88,7 @@ By simplifying the MHT CET admission journey, EngiMate saves time, reduces confu
 
 4. Start the server:
    ```bash
-   npm startn
+   npm start
    ```
 
 5. Access the application at `http://localhost:3000`
