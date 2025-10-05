@@ -287,7 +287,7 @@ class Chatbot {
         this.apiEndpoint = '/api/chat';
         this.isOpen = false;
         this.isTyping = false;
-        this.storageKey = 'edupath_chat_history';
+        this.storageKey = 'engimate_chat_history';
         
         this.initializeElements();
         this.bindEvents();
@@ -529,7 +529,7 @@ class Chatbot {
         contentDiv.className = 'message-content';
         contentDiv.innerHTML = `
             <div class="typing-indicator">
-                <span>EduPath Assistant is typing</span>
+                <span>EngiMate Assistant is typing</span>
                 <div class="typing-dots">
                     <span></span>
                     <span></span>

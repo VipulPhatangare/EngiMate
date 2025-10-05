@@ -127,7 +127,7 @@ app.get('/api/health', (req, res) => {
     res.json({ 
         status: 'OK', 
         timestamp: new Date().toISOString(),
-        service: 'EduPath Engineering Admission Chatbot API'
+        service: 'EngiMate Engineering Admission Chatbot API'
     });
 });
 
