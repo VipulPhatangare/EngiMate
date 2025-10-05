@@ -62,7 +62,7 @@ searchInput.addEventListener('input', function() {
             <div class="college-name">${college.college_name}</div>
         `;
         resultItem.addEventListener('click', () => {
-            viewCollegeDetails(college.college_id);
+            viewCollegeDetails(college.college_code);
         });
         searchResults.appendChild(resultItem);
     });

@@ -13,6 +13,53 @@ let currentPage = 1;
 const collegesPerPage = 10;
 let allColleges = [];
 
+// Toast functionality
+function showToast(message, type = 'info', duration = 4000) {
+    const toastContainer = document.getElementById('toastContainer');
+    
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    const iconMap = {
+        'success': '✓',
+        'error': '✕',
+        'warning': '⚠',
+        'info': 'ℹ'
+    };
+    
+    toast.innerHTML = `
+        <span class="toast-icon">${iconMap[type] || 'ℹ'}</span>
+        <span class="toast-message">${message}</span>
+        <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+    `;
+    
+    toastContainer.appendChild(toast);
+    
+    // Show toast with animation
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+    
+    // Auto remove toast
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.remove();
+            }
+        }, 300);
+    }, duration);
+}
+
+// Smooth scroll to results
+function scrollToResults() {
+    const resultsContainer = document.getElementById('resultsContainer');
+    resultsContainer.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+    });
+}
+
 // Event Listeners
 collegeForm.addEventListener('submit', handleFormSubmit);
 cityCheckboxGroup.addEventListener('change', handleCityCheckboxChange);
@@ -63,6 +110,8 @@ function handleFormSubmit(e) {
 // Core Functions
 async function generateCollegeList(formData) {
     try {
+        // Show loading toast
+        showToast('Searching for colleges...', 'info', 2000);
         
         const response = await fetch('/pcm/topCollegeList', {
             method: 'POST',
@@ -75,16 +124,30 @@ async function generateCollegeList(formData) {
         const data = await response.json();
         console.log(data);
         
-        
         allColleges = data;
         
         displayColleges(data);
         currentPage = 1; // Reset to first page
         updatePagination(data.length);
+        
+        // Show success toast and scroll to results
+        if (data && data.length > 0) {
+            showToast(`Found ${data.length} colleges matching your criteria!`, 'success');
+            // Auto scroll to results after a short delay
+            setTimeout(() => {
+                scrollToResults();
+            }, 500);
+        } else {
+            showToast('No colleges found matching your criteria.', 'warning');
+            // Still scroll to show the "no results" message
+            setTimeout(() => {
+                scrollToResults();
+            }, 500);
+        }
 
     } catch (error) {
         console.log('Error:', error);
-        alert('An error occurred while fetching college data');
+        showToast('An error occurred while fetching college data. Please try again.', 'error');
     }
 }
 
@@ -235,6 +298,7 @@ async function fetchUniversities() {
 
     } catch (error) {
         console.log('Error fetching universities:', error);
+        showToast('Error loading universities. Using default options.', 'warning');
         universitySelect.innerHTML = '<option value="All" selected>All Universities</option>';
     }
 }
@@ -268,6 +332,7 @@ async function fetchCities() {
 
     } catch (error) {
         console.log('Error fetching cities:', error);
+        showToast('Error loading cities. Using default options.', 'warning');
         cityCheckboxGroup.innerHTML = `
             <label class="checkbox-label">
                 <input type="checkbox" name="city" value="All" checked>

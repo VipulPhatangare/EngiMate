@@ -35,7 +35,7 @@ async function collegeInfoFetch() {
         document.getElementById('college_info_content').innerHTML = `
             <div class="info-item">
                 <div class="info-label">College Code</div>
-                <div class="info-value">${data.college_id}</div>
+                <div class="info-value">${data.college_code}</div>
             </div>
             <div class="info-item">
                 <div class="info-label">University</div>
