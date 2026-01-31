@@ -1,0 +1,131 @@
+.college-card {
+  min-width: 320px;
+  max-width: 320px;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  margin: 0 1rem;
+  cursor: pointer;
+}
+
+.college-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.college-card:active {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.college-card-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #008080 0%, #006666 100%);
+}
+
+.college-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.college-card:hover .college-card-image img {
+  transform: scale(1.1);
+}
+
+.college-card-content {
+  padding: 1.5rem;
+}
+
+.college-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+  min-height: 2.8rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.college-card-location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.college-card-location svg {
+  color: #008080;
+  flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .college-card {
+    min-width: 300px;
+    max-width: 300px;
+  }
+
+  .college-card-image {
+    height: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .college-card {
+    min-width: 290px;
+    max-width: 290px;
+    margin: 0 0.75rem;
+  }
+
+  .college-card-image {
+    height: 170px;
+  }
+
+  .college-card-content {
+    padding: 1.25rem;
+  }
+
+  .college-card-title {
+    font-size: 1.05rem;
+    min-height: 2.6rem;
+  }
+
+  .college-card-location {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .college-card {
+    min-width: 270px;
+    max-width: 270px;
+    margin: 0 0.5rem;
+  }
+
+  .college-card-image {
+    height: 160px;
+  }
+
+  .college-card-content {
+    padding: 1rem;
+  }
+
+  .college-card-title {
+    font-size: 1rem;
+    min-height: 2.4rem;
+  }
+
+  .college-card-location {
+    font-size: 0.85rem;
+  }
+}

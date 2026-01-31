@@ -1,0 +1,9 @@
+- [x] Verify that the copilot-instructions.md file in the .github directory is created.
+- [x] Clarify Project Requirements - Vite + React frontend with Express backend for Engimate MHT CET counselling platform
+- [x] Scaffold the Project - Frontend and Backend created
+- [x] Customize the Project - Landing page with Teal, Off-White, and Charcoal color scheme
+- [x] Install Required Extensions - Not needed
+- [x] Compile the Project - Dependencies installed
+- [x] Create and Run Task - Frontend running on port 5173
+- [ ] Launch the Project - Backend can be started with npm start
+- [x] Ensure Documentation is Complete - README.md created

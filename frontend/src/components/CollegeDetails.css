@@ -1,0 +1,448 @@
+.college-details-wrapper {
+  min-height: calc(100vh - 80px);
+  padding: 1rem;
+  background: #f8f9fa;
+}
+
+.back-button {
+  background: #008080;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.back-button:hover {
+  background: #006666;
+  transform: translateX(-3px);
+}
+
+.college-details-content {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.college-title {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+  line-height: 1.3;
+  border-bottom: 3px solid #008080;
+  padding-bottom: 0.8rem;
+}
+
+.college-description {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+  text-align: justify;
+}
+
+/* Tabs */
+.tabs-container {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 2px solid #e9ecef;
+  margin-bottom: 1.5rem;
+}
+
+.tab-button {
+  background: transparent;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #6c757d;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease;
+  position: relative;
+  bottom: -2px;
+}
+
+.tab-button:hover {
+  color: #008080;
+}
+
+.tab-button.active {
+  color: #008080;
+  border-bottom-color: #008080;
+}
+
+.info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.info-row {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #e9ecef;
+  align-items: center;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row.highlight {
+  background: linear-gradient(90deg, #e8f5f5 0%, transparent 100%);
+  padding: 0.8rem;
+  border-left: 3px solid #008080;
+  border-bottom: 1px solid #d4edeb;
+  margin: 0.3rem 0;
+}
+
+.info-row.address {
+  grid-template-columns: 150px 1fr;
+  align-items: start;
+  padding: 1rem 0;
+  margin-top: 0.5rem;
+  border-top: 2px solid #e9ecef;
+}
+
+.info-label {
+  font-size: 0.85rem;
+  color: #6c757d;
+  font-weight: 600;
+}
+
+.info-value {
+  font-size: 0.95rem;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.info-row.highlight .info-label {
+  color: #008080;
+}
+
+.info-row.highlight .info-value {
+  color: #006666;
+  font-weight: 600;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  font-size: 1.2rem;
+  color: #008080;
+  font-weight: 600;
+}
+
+.error-message {
+  text-align: center;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  color: #e74c3c;
+  font-size: 1rem;
+  max-width: 500px;
+  margin: 2rem auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .college-details-wrapper {
+    padding: 0.5rem;
+  }
+
+  .college-details-content {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  .college-title {
+    font-size: 1.3rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .college-description {
+    font-size: 0.85rem;
+    text-align: left;
+  }
+
+  .tabs-container {
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-bottom: 1rem;
+  }
+
+  .tabs-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-button {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .info-row {
+    grid-template-columns: 100px 1fr;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+  }
+
+  .info-row.address {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+
+  .info-label {
+    font-size: 0.75rem;
+  }
+
+  .info-value {
+    font-size: 0.85rem;
+  }
+
+  /* Table responsiveness */
+  .table-container {
+    margin: 0 -1rem;
+    padding: 0 1rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .data-table {
+    font-size: 0.75rem;
+    min-width: 600px;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 0.5rem 0.4rem;
+    white-space: nowrap;
+  }
+
+  .data-table th {
+    font-size: 0.75rem;
+    position: sticky;
+    top: 0;
+    background: #008080;
+    z-index: 10;
+  }
+
+  /* Filters on mobile */
+  .cutoff-filters {
+    gap: 0.8rem;
+  }
+
+  .filter-group {
+    flex: 1;
+    min-width: calc(50% - 0.4rem);
+  }
+
+  .filter-group label {
+    font-size: 0.75rem;
+  }
+
+  .filter-group select {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+    min-width: unset;
+  }
+}
+
+@media (max-width: 480px) {
+  .college-details-wrapper {
+    padding: 0.5rem;
+  }
+
+  .college-details-content {
+    padding: 0.8rem;
+  }
+
+  .back-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .college-title {
+    font-size: 1.1rem;
+    border-bottom-width: 2px;
+  }
+
+  .college-description {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .tabs-container {
+    margin-bottom: 0.8rem;
+  }
+
+  .tab-button {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .info-row {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+    padding: 0.5rem 0;
+  }
+
+  .info-row.highlight {
+    padding: 0.5rem;
+  }
+
+  .info-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #008080;
+  }
+
+  .info-value {
+    font-size: 0.8rem;
+  }
+
+  /* Very compact tables for small screens */
+  .table-container {
+    margin: 0 -0.8rem;
+    padding: 0 0.8rem;
+    border-radius: 0;
+  }
+
+  .data-table {
+    font-size: 0.7rem;
+    min-width: 500px;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 0.4rem 0.3rem;
+  }
+
+  .data-table th {
+    font-size: 0.7rem;
+  }
+
+  /* Stack filters vertically on very small screens */
+  .cutoff-filters {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .filter-group {
+    min-width: 100%;
+  }
+
+  .no-data,
+  .error-message {
+    font-size: 0.85rem;
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* Seat Matrix & Cutoff Sections */
+.seat-matrix-section,
+.cutoff-section {
+  margin-top: 1rem;
+}
+
+.cutoff-filters {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.filter-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6c757d;
+}
+
+.filter-group select {
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #2c3e50;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  min-width: 150px;
+}
+
+.filter-group select:focus {
+  outline: none;
+  border-color: #008080;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-top: 1rem;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.data-table thead {
+  background: #008080;
+  color: white;
+}
+
+.data-table th {
+  padding: 0.8rem;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.data-table tbody tr {
+  border-bottom: 1px solid #e9ecef;
+  transition: background-color 0.2s ease;
+}
+
+.data-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.data-table td {
+  padding: 0.8rem;
+  color: #2c3e50;
+}
+
+.no-data {
+  text-align: center;
+  padding: 2rem;
+  color: #6c757d;
+  font-style: italic;
+}

@@ -1,0 +1,67 @@
+.dashboard {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.dashboard-content {
+  padding: 2rem 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.college-section {
+  margin: 3rem 0;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .dashboard-content {
+    padding: 1.5rem 1rem;
+  }
+
+  .college-section {
+    margin: 2.5rem 0;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 1rem 0.75rem;
+  }
+
+  .college-section {
+    margin: 2rem 0;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-content {
+    padding: 0.875rem 0.5rem;
+  }
+
+  .college-section {
+    margin: 1.5rem 0;
+  }
+
+  .section-title {
+    font-size: 1.35rem;
+    margin-bottom: 1.25rem;
+  }
+}

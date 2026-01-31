@@ -1,0 +1,1110 @@
+.preference-table-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 1rem 0 0 0;
+    padding: 0;
+}
+
+/* Search and Actions Container */
+.search-and-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 0 0.75rem 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+}
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
+.table-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.add-colleges-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.2);
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.add-colleges-btn:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+.add-colleges-btn:active {
+    transform: translateY(0);
+}
+
+.add-colleges-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.export-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: #008080;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 128, 128, 0.2);
+}
+
+.export-btn:hover {
+    background: #006666;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 128, 128, 0.3);
+}
+
+.export-btn:active {
+    transform: translateY(0);
+}
+
+.export-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.preference-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    font-size: 0.9rem;
+}
+
+.preference-table thead {
+    background: linear-gradient(135deg, #008080 0%, #006666 100%);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.preference-table th {
+    padding: 0.6rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-bottom: 2px solid #006666;
+}
+
+.preference-table th.col-sr,
+.preference-table th.col-choice-code {
+    color: white;
+}
+
+.preference-table tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+    transition: background-color 0.2s;
+}
+
+.preference-table tbody tr:hover {
+    background-color: #f0f8f8;
+}
+
+.preference-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+/* Top 10 colleges highlighting */
+.preference-table tbody tr.top-10-row {
+    background-color: #d4edda;
+}
+
+.preference-table tbody tr.top-10-row:hover {
+    background-color: #c3e6cb;
+}
+
+/* Newly added colleges highlighting */
+.preference-table tbody tr.newly-added-row {
+    background-color: #fff3cd;
+}
+
+.preference-table tbody tr.newly-added-row:hover {
+    background-color: #ffe69c;
+}
+
+.preference-table td {
+    padding: 0.6rem;
+    vertical-align: top;
+}
+
+/* Column widths */
+.col-sr {
+    width: 60px;
+    text-align: center;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.col-choice-code {
+    width: 120px;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.col-college {
+    min-width: 250px;
+    max-width: 350px;
+}
+
+.col-branch {
+    min-width: 200px;
+    max-width: 280px;
+}
+
+.col-city {
+    width: 120px;
+}
+
+.col-university {
+    min-width: 200px;
+    max-width: 280px;
+}
+
+.col-cutoffs {
+    min-width: 300px;
+}
+
+.col-actions {
+    width: 80px;
+    text-align: center;
+    padding: 0.6rem;
+}
+
+.delete-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.delete-btn:hover:not(.disabled) {
+    background: #c82333;
+    transform: scale(1.05);
+}
+
+.delete-btn:active:not(.disabled) {
+    transform: scale(0.95);
+}
+
+.delete-btn.disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.delete-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Cell content styling */
+.college-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.college-name {
+    font-weight: 600;
+    color: #2c3e50;
+    line-height: 1.4;
+}
+
+.branch-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.branch-name {
+    font-weight: 500;
+    color: #2c3e50;
+    line-height: 1.4;
+}
+
+.cutoffs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.cutoff-item {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    background: #f8fafc;
+    border-radius: 4px;
+    border-left: 3px solid #008080;
+}
+
+.cutoff-label {
+    font-weight: 600;
+    color: #008080;
+    min-width: 70px;
+}
+
+.cutoff-value {
+    color: #2c3e50;
+    font-family: 'Courier New', monospace;
+}
+
+.no-cutoffs {
+    color: #95a5a6;
+    font-style: italic;
+    font-size: 0.85rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+    .preference-table {
+        font-size: 0.85rem;
+    }
+
+    .preference-table th,
+    .preference-table td {
+        padding: 0.75rem;
+    }
+
+    .export-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 1200px) {
+    .col-college,
+    .col-branch,
+    .col-university {
+        min-width: 180px;
+    }
+
+    .col-cutoffs {
+        min-width: 250px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .preference-table {
+        font-size: 0.875rem;
+    }
+
+    .preference-table th,
+    .preference-table td {
+        padding: 0.65rem;
+    }
+
+    .col-college,
+    .col-branch {
+        min-width: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .preference-table-container {
+        margin-top: 1rem;
+        padding: 0;
+    }
+
+    .search-and-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .action-buttons {
+        width: 100%;
+        flex-direction: row;
+        gap: 0.75rem;
+    }
+
+    .preference-search-bar {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .add-colleges-btn,
+    .export-btn {
+        flex: 1;
+        padding: 0.875rem 1rem;
+        font-size: 0.9rem;
+        justify-content: center;
+    }
+
+    .table-wrapper {
+        border-radius: 8px;
+    }
+
+    .preference-table {
+        font-size: 0.85rem;
+    }
+
+    .preference-table th,
+    .preference-table td {
+        padding: 0.6rem 0.5rem;
+    }
+
+    .col-sr {
+        width: 50px;
+    }
+
+    .col-choice-code {
+        width: 110px;
+    }
+
+    .col-college,
+    .col-branch {
+        min-width: 180px;
+    }
+
+    .cutoff-item {
+        padding: 0.35rem 0.5rem;
+        gap: 0.4rem;
+    }
+
+    .cutoff-label {
+        min-width: 65px;
+        font-size: 0.85rem;
+    }
+
+    .cutoff-value {
+        font-size: 0.85rem;
+    }
+
+    .delete-btn {
+        padding: 0.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Stack table for mobile */
+    .action-buttons {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .add-colleges-btn,
+    .export-btn {
+        width: 100%;
+        padding: 0.875rem;
+        justify-content: center;
+    }
+
+    .table-wrapper {
+        border-radius: 8px;
+        margin: 0 -0.5rem;
+    }
+
+    .preference-table,
+    .preference-table thead,
+    .preference-table tbody,
+    .preference-table th,
+    .preference-table td,
+    .preference-table tr {
+        display: block;
+    }
+
+    .preference-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .preference-table tbody tr {
+        margin-bottom: 1.25rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 0;
+        overflow: hidden;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .preference-table tbody tr.top-10-row {
+        border-color: #28a745;
+        background-color: #d4edda;
+    }
+
+    .preference-table tbody tr.newly-added-row {
+        border-color: #ffc107;
+        background-color: #fff3cd;
+    }
+
+    .preference-table td {
+        border: none;
+        position: relative;
+        padding: 0.875rem 1rem;
+        padding-left: 42%;
+        text-align: left;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .preference-table td:last-child {
+        border-bottom: none;
+    }
+
+    .preference-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 1rem;
+        width: 38%;
+        font-weight: 600;
+        color: #008080;
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+
+    .preference-table td:first-child {
+        background: linear-gradient(135deg, #008080 0%, #006666 100%);
+        color: white;
+        text-align: center;
+        padding: 1rem;
+        font-size: 1.3rem;
+        font-weight: 700;
+        border-radius: 0;
+        margin-bottom: 0;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .preference-table td:first-child::before {
+        content: 'Sr No. ';
+        position: static;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .col-actions {
+        text-align: center;
+        padding: 1rem;
+        background: #f8f9fa;
+    }
+
+    .col-actions::before {
+        position: static;
+        display: block;
+        margin-bottom: 0.75rem;
+        width: 100%;
+        text-align: center;
+    }
+
+    .delete-btn {
+        width: 100%;
+        max-width: 250px;
+        padding: 0.875rem;
+        font-size: 0.95rem;
+    }
+
+    .delete-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .cutoff-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .cutoff-label {
+        min-width: auto;
+        font-size: 0.8rem;
+    }
+
+    .cutoff-value {
+        font-size: 0.9rem;
+        word-break: break-word;
+    }
+
+    .college-name,
+    .branch-name {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+}
+
+/* Search Bar Styles */
+.preference-search-bar {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.college-search-input {
+    width: 100%;
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    margin: 0;
+    display: block;
+    box-sizing: border-box;
+}
+
+.college-search-input:focus {
+    outline: none;
+    border-color: #008080;
+    box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.1);
+}
+
+.college-search-input::placeholder {
+    color: #999;
+}
+
+.search-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    pointer-events: none;
+}
+
+/* Search Status */
+.search-status {
+    margin-bottom: 0.25rem;
+    padding: 0.5rem 1rem;
+    background: #e8f4f8;
+    border-left: 4px solid #008080;
+    border-radius: 4px;
+}
+
+.search-status p {
+    margin: 0;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.search-status .no-results-text {
+    color: #e74c3c;
+}
+
+/* Search Results Section */
+.search-results-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #e0e0e0;
+}
+
+.search-results-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.no-results {
+    text-align: center;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.no-results p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .preference-search-bar {
+        max-width: 100%;
+    }
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 900px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 1.5rem;
+}
+
+.close-modal-btn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #666;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.close-modal-btn:hover {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.modal-search {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.modal-search-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.modal-search-input:focus {
+    outline: none;
+    border-color: #008080;
+    box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.1);
+}
+
+.modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 1.5rem;
+}
+
+.colleges-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.college-item {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.college-item:hover {
+    border-color: #008080;
+    background-color: #f0f8f8;
+}
+
+.college-item.selected {
+    border-color: #008080;
+    background-color: #e8f4f8;
+}
+
+.college-item.already-added {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #f8f9fa;
+}
+
+.college-item.already-added:hover {
+    border-color: #e0e0e0;
+    background-color: #f8f9fa;
+}
+
+.college-item label {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.college-item.already-added label {
+    cursor: not-allowed;
+}
+
+.college-item input[type="checkbox"] {
+    margin-top: 0.25rem;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.college-item.already-added input[type="checkbox"] {
+    cursor: not-allowed;
+}
+
+.college-item-details {
+    flex: 1;
+}
+
+.college-item-name {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+}
+
+.college-item-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.college-item-info span {
+    display: flex;
+    align-items: center;
+}
+
+.college-item-info .choice-code {
+    font-weight: 600;
+    color: #008080;
+}
+
+.college-item-info .already-added-badge {
+    background: #6c757d;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.no-colleges-found {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+}
+
+.no-colleges-found p {
+    font-size: 1.1rem;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-top: 2px solid #e0e0e0;
+}
+
+.btn-cancel,
+.btn-add {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+}
+
+.btn-cancel {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background: #5a6268;
+}
+
+.btn-add {
+    background: #28a745;
+    color: white;
+}
+
+.btn-add:hover {
+    background: #218838;
+}
+
+.btn-add:disabled {
+    background: #c3e6cb;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        max-height: 90vh;
+        max-width: 95%;
+    }
+
+    .modal-header {
+        padding: 1.25rem;
+    }
+
+    .modal-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .modal-search {
+        padding: 1rem;
+    }
+
+    .modal-body {
+        padding: 1rem;
+    }
+
+    .college-item {
+        padding: 0.875rem;
+    }
+
+    .college-item-name {
+        font-size: 1rem;
+    }
+
+    .college-item-info {
+        flex-direction: column;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .modal-footer {
+        padding: 1.25rem;
+        gap: 0.75rem;
+    }
+
+    .btn-cancel,
+    .btn-add {
+        padding: 0.875rem 1.25rem;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-overlay {
+        padding: 0.5rem;
+    }
+
+    .modal-content {
+        max-width: 100%;
+        border-radius: 8px;
+    }
+
+    .modal-header,
+    .modal-search,
+    .modal-body,
+    .modal-footer {
+        padding: 1rem;
+    }
+
+    .modal-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .college-item {
+        padding: 0.75rem;
+    }
+
+    .modal-footer {
+        flex-direction: column;
+    }
+
+    .btn-cancel,
+    .btn-add {
+        width: 100%;
+    }
+}
+
+/* Delete Confirmation Modal */
+.delete-modal-content {
+    background: white;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.delete-modal-header {
+    background: #dc3545;
+    color: white;
+    padding: 1.5rem;
+    border-bottom: none;
+}
+
+.delete-modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.delete-modal-body {
+    padding: 2rem 1.5rem;
+}
+
+.delete-modal-body > p {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.05rem;
+    color: #2c3e50;
+}
+
+.college-to-delete {
+    background: #f8f9fa;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.college-name-highlight {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin-bottom: 0.75rem;
+}
+
+.college-details-small {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.college-details-small span {
+    display: flex;
+    align-items: center;
+}
+
+.delete-modal-footer {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+}
+
+.btn-cancel-delete {
+    flex: 1;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #6c757d;
+    background: white;
+    color: #6c757d;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-cancel-delete:hover {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-confirm-delete {
+    flex: 1;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: #dc3545;
+    color: white;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-confirm-delete:hover {
+    background: #c82333;
+}
+
+@media (max-width: 480px) {
+    .delete-modal-content {
+        width: 95%;
+    }
+
+    .delete-modal-header {
+        padding: 1rem;
+    }
+
+    .delete-modal-header h2 {
+        font-size: 1.25rem;
+    }
+
+    .delete-modal-body {
+        padding: 1.5rem 1rem;
+    }
+
+    .delete-modal-footer {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .btn-cancel-delete,
+    .btn-confirm-delete {
+        width: 100%;
+    }
+}
+
