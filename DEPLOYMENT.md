@@ -79,6 +79,7 @@ nano .env
 ```
 
 **Important:** Update these values in `.env`:
+- `PORT` - Backend port (default: 5050)
 - `MONGODB_URI` - Your MongoDB connection string
 - `SUPABASE_URL` - Your Supabase project URL
 - `SUPABASE_KEY` - Your Supabase anon key
@@ -249,13 +250,13 @@ sudo tail -f /var/log/nginx/access.log
 
 ### Test Backend API
 ```bash
-curl http://localhost:5000/api/health
+curl http://localhost:5050/api/health
 ```
 
 ### Check if Backend is Running
 ```bash
 pm2 status
-sudo netstat -tulpn | grep :5000
+sudo netstat -tulpn | grep :5050
 ```
 
 ### Restart Services
@@ -270,7 +271,7 @@ sudo systemctl restart nginx
 ## Environment Variables Reference
 
 ### Backend (.env)
-- `PORT` - Backend server port (default: 5000)
+- `PORT` - Backend server port (default: 5050)
 - `NODE_ENV` - Environment (production)
 - `MONGODB_URI` - MongoDB connection string
 - `SUPABASE_URL` - Supabase project URL

@@ -16,6 +16,10 @@ module.exports = {
     merge_logs: true,
     autorestart: true,
     max_restarts: 10,
-    min_uptime: '10s'
+    min_uptime: '10s',
+    env_production: {
+      NODE_ENV: 'production',
+      PORT: 5050
+    }
   }]
 };

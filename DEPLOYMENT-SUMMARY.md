@@ -110,7 +110,7 @@ sudo certbot renew --dry-run
 ### 📊 Testing Deployment
 
 1. **Check DNS**: `nslookup engimate.synthomind.cloud`
-2. **Check Backend**: `curl http://localhost:5000/api/health`
+2. **Check Backend**: `curl http://localhost:5050/api/health`
 3. **Check PM2**: `pm2 status`
 4. **Check Nginx**: `sudo nginx -t`
 5. **View Logs**: `pm2 logs engimate-backend`
@@ -158,8 +158,8 @@ sudo nginx -t
 
 **Port issues?**
 ```bash
-sudo netstat -tulpn | grep :5000
-sudo lsof -i :5000
+sudo netstat -tulpn | grep :5050
+sudo lsof -i :5050
 ```
 
 **Database connection?**
@@ -198,7 +198,8 @@ cat backend/.env | grep MONGODB_URI
 
 **Domain**: engimate.synthomind.cloud  
 **IP**: 194.238.17.210  
-**Port**: 2050  
+**SSH Port**: 2050
+**Backend Port**: 5050  
 **Repository**: https://github.com/VipulPhatangare/EngiMate.git
 
 **Status**: Ready for deployment ✅

@@ -67,7 +67,7 @@ Engimate react/
 
 The backend `.env` file is already configured with:
 ```env
-PORT=5000
+PORT=5050
 MONGODB_URI=mongodb+srv://synthomind:kEB5OOanYGOlyL9L@cluster.4kercf5.mongodb.net/Engimate?retryWrites=true&w=majority&appName=Cluster
 SESSION_SECRET=Engimate
 JWT_SECRET=Engimate_JWT_Secret_Key_2025
@@ -83,7 +83,7 @@ cd backend
 npm install
 npm start
 ```
-The backend will run on `http://localhost:5000`
+The backend will run on `http://localhost:5050`
 
 2. **Frontend Setup**
 ```bash
@@ -276,7 +276,7 @@ For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)
 
 #### Backend Production (.env)
 ```env
-PORT=5000
+PORT=5050
 NODE_ENV=production
 MONGODB_URI=your_mongodb_uri
 SUPABASE_URL=your_supabase_url
