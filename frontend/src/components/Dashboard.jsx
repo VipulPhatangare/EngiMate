@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './Dashboard.css'
 import SearchBar from './SearchBar'
 import CollegeSlider from './CollegeSlider'
@@ -12,18 +12,46 @@ import NotificationSlider from './NotificationSlider'
 import ChatBot from './ChatBot'
 
 function Dashboard({ user, onLogout, onUserUpdate }) {
+  // Load saved state from localStorage
+  const loadSavedState = () => {
+    try {
+      const savedState = localStorage.getItem('dashboardState');
+      if (savedState) {
+        return JSON.parse(savedState);
+      }
+    } catch (error) {
+      console.error('Error loading saved state:', error);
+    }
+    return null;
+  };
+
+  const savedState = loadSavedState();
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const [showProfile, setShowProfile] = useState(false)
-  const [selectedCollege, setSelectedCollege] = useState(null)
-  const [showTopColleges, setShowTopColleges] = useState(false)
-  const [showCollegePredictor, setShowCollegePredictor] = useState(false)
-  const [showPreferenceList, setShowPreferenceList] = useState(false)
-  const [topCollegesSearchData, setTopCollegesSearchData] = useState({
+  const [showProfile, setShowProfile] = useState(savedState?.showProfile || false)
+  const [selectedCollege, setSelectedCollege] = useState(savedState?.selectedCollege || null)
+  const [showTopColleges, setShowTopColleges] = useState(savedState?.showTopColleges || false)
+  const [showCollegePredictor, setShowCollegePredictor] = useState(savedState?.showCollegePredictor || false)
+  const [showPreferenceList, setShowPreferenceList] = useState(savedState?.showPreferenceList || false)
+  const [topCollegesSearchData, setTopCollegesSearchData] = useState(savedState?.topCollegesSearchData || {
     colleges: [],
     selectedUniversity: 'All',
     selectedCities: ['All'],
     currentPage: 1
   })
+
+  // Save dashboard state to localStorage whenever it changes
+  useEffect(() => {
+    const stateToSave = {
+      showProfile,
+      selectedCollege,
+      showTopColleges,
+      showCollegePredictor,
+      showPreferenceList,
+      topCollegesSearchData
+    };
+    localStorage.setItem('dashboardState', JSON.stringify(stateToSave));
+  }, [showProfile, selectedCollege, showTopColleges, showCollegePredictor, showPreferenceList, topCollegesSearchData]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen)
@@ -36,11 +64,27 @@ function Dashboard({ user, onLogout, onUserUpdate }) {
   const handleCollegeSelect = (college) => {
     console.log('Dashboard received college:', college)
     console.log('Setting college code:', college.college_code)
+    // Clear localStorage when leaving CollegePredictor or PreferenceList
+    if (showCollegePredictor) {
+      localStorage.removeItem('collegePredictorData')
+    }
+    if (showPreferenceList) {
+      localStorage.removeItem('preferenceListData')
+      localStorage.removeItem('newlyAddedCodes')
+    }
     setSelectedCollege(college.college_code)
   }
 
   const handleBackToHome = () => {
     console.log('Navigating back to home')
+    // Clear localStorage when leaving CollegePredictor or PreferenceList
+    if (showCollegePredictor) {
+      localStorage.removeItem('collegePredictorData')
+    }
+    if (showPreferenceList) {
+      localStorage.removeItem('preferenceListData')
+      localStorage.removeItem('newlyAddedCodes')
+    }
     setSelectedCollege(null)
     setShowTopColleges(false)
     setShowCollegePredictor(false)
@@ -49,6 +93,14 @@ function Dashboard({ user, onLogout, onUserUpdate }) {
   }
 
   const handleShowTopColleges = () => {
+    // Clear localStorage when leaving CollegePredictor or PreferenceList
+    if (showCollegePredictor) {
+      localStorage.removeItem('collegePredictorData')
+    }
+    if (showPreferenceList) {
+      localStorage.removeItem('preferenceListData')
+      localStorage.removeItem('newlyAddedCodes')
+    }
     setShowTopColleges(true)
     setShowCollegePredictor(false)
     setShowPreferenceList(false)
@@ -57,6 +109,11 @@ function Dashboard({ user, onLogout, onUserUpdate }) {
   }
 
   const handleShowCollegePredictor = () => {
+    // Clear PreferenceList localStorage when leaving
+    if (showPreferenceList) {
+      localStorage.removeItem('preferenceListData')
+      localStorage.removeItem('newlyAddedCodes')
+    }
     setShowCollegePredictor(true)
     setShowTopColleges(false)
     setShowPreferenceList(false)
@@ -65,6 +122,10 @@ function Dashboard({ user, onLogout, onUserUpdate }) {
   }
 
   const handleShowPreferenceList = () => {
+    // Clear CollegePredictor localStorage when leaving
+    if (showCollegePredictor) {
+      localStorage.removeItem('collegePredictorData')
+    }
     setShowPreferenceList(true)
     setShowTopColleges(false)
     setShowCollegePredictor(false)
@@ -72,12 +133,31 @@ function Dashboard({ user, onLogout, onUserUpdate }) {
     setShowProfile(false)
   }
 
+  const handleShowProfile = () => {
+    // Clear localStorage when leaving CollegePredictor or PreferenceList
+    if (showCollegePredictor) {
+      localStorage.removeItem('collegePredictorData')
+    }
+    if (showPreferenceList) {
+      localStorage.removeItem('preferenceListData')
+      localStorage.removeItem('newlyAddedCodes')
+    }
+    setShowProfile(true)
+    setShowTopColleges(false)
+    setShowCollegePredictor(false)
+    setShowPreferenceList(false)
+    setSelectedCollege(null)
+  }
+
   const handleBackFromCollegePredictor = () => {
+    localStorage.removeItem('collegePredictorData')
     setShowCollegePredictor(false)
     setSelectedCollege(null)
   }
 
   const handleBackFromPreferenceList = () => {
+    localStorage.removeItem('preferenceListData')
+    localStorage.removeItem('newlyAddedCodes')
     setShowPreferenceList(false)
     setSelectedCollege(null)
   }
@@ -112,7 +192,7 @@ function Dashboard({ user, onLogout, onUserUpdate }) {
             <a href="#top-colleges" onClick={(e) => { e.preventDefault(); handleShowTopColleges(); }}>Top Colleges</a>
             <a href="#college-predictor" onClick={(e) => { e.preventDefault(); handleShowCollegePredictor(); }}>College Predictor</a>
             <a href="#preference-list" onClick={(e) => { e.preventDefault(); handleShowPreferenceList(); }}>Preference List</a>
-            <a href="#profile" onClick={(e) => { e.preventDefault(); setShowProfile(true); }}>Profile</a>
+            <a href="#profile" onClick={(e) => { e.preventDefault(); handleShowProfile(); }}>Profile</a>
             <span className="user-name">Hi, {user?.name}</span>
             <button onClick={onLogout} className="btn-nav">Logout</button>
           </div>
@@ -134,7 +214,7 @@ function Dashboard({ user, onLogout, onUserUpdate }) {
           <a href="#top-colleges" onClick={(e) => { e.preventDefault(); handleShowTopColleges(); closeSidebar(); }}>Top Colleges</a>
           <a href="#college-predictor" onClick={(e) => { e.preventDefault(); handleShowCollegePredictor(); closeSidebar(); }}>College Predictor</a>
           <a href="#preference-list" onClick={(e) => { e.preventDefault(); handleShowPreferenceList(); closeSidebar(); }}>Preference List</a>
-          <a href="#profile" onClick={(e) => { e.preventDefault(); setShowProfile(true); closeSidebar(); }}>Profile</a>
+          <a href="#profile" onClick={(e) => { e.preventDefault(); handleShowProfile(); closeSidebar(); }}>Profile</a>
           <span className="user-name-mobile">Hi, {user?.name}</span>
           <button onClick={() => { onLogout(); closeSidebar(); }} className="btn-sidebar">Logout</button>
         </div>

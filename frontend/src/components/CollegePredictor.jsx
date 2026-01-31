@@ -4,8 +4,23 @@ import './CollegePredictor.css';
 import CollegePredictorCard from './CollegePredictorCard';
 
 const CollegePredictor = ({ onBack }) => {
-    const [examType, setExamType] = useState(''); // 'mhtcet' or 'jee'
-    const [formData, setFormData] = useState({
+    // Load saved data from localStorage
+    const loadSavedData = () => {
+        try {
+            const savedData = localStorage.getItem('collegePredictorData');
+            if (savedData) {
+                return JSON.parse(savedData);
+            }
+        } catch (error) {
+            console.error('Error loading saved data:', error);
+        }
+        return null;
+    };
+
+    const savedData = loadSavedData();
+
+    const [examType, setExamType] = useState(savedData?.examType || ''); // 'mhtcet' or 'jee'
+    const [formData, setFormData] = useState(savedData?.formData || {
         percentile: '',
         gender: 'Male',
         caste: 'OPEN',
@@ -17,7 +32,7 @@ const CollegePredictor = ({ onBack }) => {
     });
 
     const [cities, setCities] = useState([]);
-    const [colleges, setColleges] = useState([]);
+    const [colleges, setColleges] = useState(savedData?.colleges || []);
     const [loading, setLoading] = useState(false);
     const [loadingCities, setLoadingCities] = useState(true);
     const [error, setError] = useState('');
@@ -38,6 +53,16 @@ const CollegePredictor = ({ onBack }) => {
     useEffect(() => {
         fetchCities();
     }, []);
+
+    // Save data to localStorage whenever it changes
+    useEffect(() => {
+        const dataToSave = {
+            examType,
+            formData,
+            colleges
+        };
+        localStorage.setItem('collegePredictorData', JSON.stringify(dataToSave));
+    }, [examType, formData, colleges]);
 
     const fetchCities = async () => {
         try {
@@ -178,6 +203,13 @@ const CollegePredictor = ({ onBack }) => {
             }
 
             setColleges(response.data);
+            // Scroll to results
+            setTimeout(() => {
+                const resultsSection = document.querySelector('.predictor-results');
+                if (resultsSection) {
+                    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
         } catch (err) {
             setError('Failed to fetch college predictions. Please try again.');
         } finally {
@@ -349,15 +381,15 @@ const CollegePredictor = ({ onBack }) => {
                             </div>
 
                             {/* TFWS Checkbox */}
-                            <div className="form-group checkbox-group">
-                                <label>
+                            <div className="form-group">
+                                <label className="checkbox-label">
                                     <input
                                         type="checkbox"
                                         name="tfws"
                                         checked={formData.tfws}
                                         onChange={handleInputChange}
                                     />
-                                    <span>TFWS (Tuition Fee Waiver Scheme)</span>
+                                    TFWS (Tuition Fee Waiver Scheme)
                                 </label>
                             </div>
 

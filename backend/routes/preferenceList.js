@@ -41,8 +41,8 @@ function getCasteColumns(caste, gender) {
 
     if(caste === 'EWS'){
         new_data_of_student.caste_Column_H = `r.${caste}`;
-        new_data_of_student.caste_Column_H = `r.${caste}`;
-        new_data_of_student.caste_Column_H = `r.${caste}`;
+        new_data_of_student.caste_Column_S = `r.${caste}`;
+        new_data_of_student.caste_Column_O = `r.${caste}`;
         new_data_of_student.caste_name = `${caste}`;
 
     }
@@ -889,7 +889,7 @@ async function getCollegesMHT(formData){
         let { caste_column, caste_condition } = await getCollegesHelper(formData);
         
         // console.log(caste_column, caste_condition)
-        const { data, error } = await supabase.rpc('collegepreferncelist', {
+        let { data, error } = await supabase.rpc('collegepreferncelist', {
             caste_column: `${caste_column}`,
             caste_condition: `${caste_condition}`,
             maxrank: new_data_of_student.maxRank,
@@ -905,7 +905,23 @@ async function getCollegesMHT(formData){
             colleges =  college_filter(data, formData);
             colleges.sort((a, b) => b.points - a.points);    
         }
-        
+
+        let college_list = [];
+
+        data.forEach(element => {
+            if(formData.gender == 'Female'){
+                if(element.gopen !== '0 (0)' || element.lopen !== '0 (0)'){
+                    college_list.push(element);
+                }
+            }else{
+                if(element.gopen !== '0 (0)'){
+                    if(element.Branch_type != 'F'){
+                        college_list.push(element);
+                    }
+                }
+            }
+        });
+        data = college_list;
         return {colleges, data};
 
     } catch (err) {
@@ -921,7 +937,7 @@ async function getCollegesMHTAI(formData){
         let { caste_column, caste_condition } = await getCollegesHelper(formData);
         
         // console.log(caste_column, caste_condition)
-        const { data, error } = await supabase.rpc('collegepreferncelistmhtai', {
+        let { data, error } = await supabase.rpc('collegepreferncelistmhtai', {
             minrank: new_data_of_student.minRankai,
             maxrank: new_data_of_student.maxRankai,
             caste_column: caste_column,
@@ -937,8 +953,24 @@ async function getCollegesMHTAI(formData){
             colleges =  college_filter(data, formData);
             colleges.sort((a, b) => b.points - a.points);    
         }
+
+        let college_list = [];
+
+        data.forEach(element => {
+            if(formData.gender == 'Female'){
+                if(element.gopen !== '0 (0)' || element.lopen !== '0 (0)'){
+                    college_list.push(element);
+                }
+            }else{
+                if(element.gopen !== '0 (0)' && element.branch_type != 'F'){
+                    college_list.push(element);
+                }
+            }
+        });
         
-        return colleges;
+        data = college_list;
+        
+        return {colleges, data};
 
     } catch (err) {
         console.error('Error in getColleges:', err);
@@ -973,34 +1005,7 @@ function calculateProbabilityForJEE(aiPercentile, studentPercentile) {
     }
 }
 
-function calculateProbability(gopenRank, lopenRank, gender) {
-    const rank = new_data_of_student.rank;
-    const lowThreshold = rank * 0.75; // 25% below rank
-    const mediumThreshold = rank * 1.10; // 10% above rank
 
-    let rankToUse = gopenRank;
-
-    // If GOPEN is 0 or null and gender is female, check LOPEN
-    if ((gopenRank === 0 || gopenRank === '0' || !gopenRank) && gender === 'Female') {
-        if (lopenRank && lopenRank !== 0 && lopenRank !== '0') {
-            rankToUse = lopenRank;
-        } else {
-            return 'N/A';
-        }
-    } else if (gopenRank === 0 || gopenRank === '0' || !gopenRank) {
-        return 'N/A';
-    }
-
-    const rankNum = typeof rankToUse === 'string' ? parseInt(rankToUse) : rankToUse;
-
-    if (rankNum <= lowThreshold) {
-        return 'Low';
-    } else if (rankNum <= mediumThreshold) {
-        return 'Medium';
-    } else {
-        return 'High';
-    }
-}
 
 function college_filter_by_city(colleges, city){
     return colleges.filter(element =>  city.includes(element.city));
@@ -1079,7 +1084,9 @@ router.post('/collegePreferenceList', async(req,res)=>{
         allColleges = [...allColleges, ...collegeData.data];
         let collegesAIUP = [];
         if(formData.isAI){
-            collegesAIUP = await getCollegesMHTAI(formData);
+            let collegeDataAI = await getCollegesMHTAI(formData);
+            collegesAIUP = collegeDataAI.colleges;
+            allColleges = [...allColleges, ...collegeDataAI.data];
             collegesAIUP.sort((a, b) => a.points - b.points);
         }
 
@@ -1099,7 +1106,9 @@ router.post('/collegePreferenceList', async(req,res)=>{
 
         let collegesAIDOWN = [];
         if(formData.isAI){
-            collegesAIDOWN = await getCollegesMHTAI(formData);
+            let collegeDataAI = await getCollegesMHTAI(formData);
+            collegesAIDOWN = collegeDataAI.colleges;
+            allColleges = [...allColleges, ...collegeDataAI.data];
             collegesAIDOWN.sort((a, b) => b.points - a.points);
         }
 
@@ -1203,8 +1212,8 @@ function college_filter_ai(colleges, formData){
 async function getCollegesAi(minRank, maxRank, formData) {
 
     try {
-        console.log('AI Query - minRank:', minRank, 'maxRank:', maxRank)
-        const { data, error } = await supabase.rpc('collegepreferncelistai', {
+        // console.log('AI Query - minRank:', minRank, 'maxRank:', maxRank)
+        let { data, error } = await supabase.rpc('collegepreferncelistai', {
             minrank: minRank,
             maxrank: maxRank
         });
@@ -1218,8 +1227,15 @@ async function getCollegesAi(minRank, maxRank, formData) {
             colleges =  college_filter_ai(data, formData);
             colleges.sort((a, b) => b.points - a.points);    
         }
+
+        let college_list = [];
+
+        if(formData.gender == 'Male'){
+            college_list = data.filter(element=> element.branch_type != 'F');
+        }
+        data = college_list;
         
-        return colleges;
+        return {colleges, data};
 
     } catch (err) {
         console.error('Error in getColleges:', err);
@@ -1235,20 +1251,24 @@ router.post('/collegePreferenceListAI', async(req,res)=>{
         const formData = req.body;
         // console.log(formData);
         clear_new_data_function();
-
-        let collegesAIUP = await getCollegesAi(1, formData.aiRank, formData);
-        let collegesAIDOWN = await getCollegesAi(formData.aiRank, 300000, formData);
-        // console.log(collegesAIUP);
-
-
         let allColleges = [];
-        allColleges = [...allColleges, ...collegesAIUP, ...collegesAIUP];
+        
+        let collegeData = await getCollegesAi(1, formData.aiRank, formData);
+        allColleges = [...allColleges, ...collegeData.data];
+        let collegesAIUP = collegeData.colleges;
+        collegesAIUP.sort((a, b) => a.points - b.points);
+
+        collegeData = await getCollegesAi(formData.aiRank, 300000, formData);
+        allColleges = [...allColleges, ...collegeData.data];
+        let collegesAIDOWN = collegeData.colleges;
+        // console.log(collegesAIUP);
+        collegesAIDOWN.sort((a, b) => a.points - b.points);
+        
         allColleges = [
             ...new Map(allColleges.map(item=>[item.choice_code, item])).values()
         ];
 
         allColleges.sort((a, b) => b.points - a.points);
-
 
         let upLimit = 60;
         let downLimit = 90;

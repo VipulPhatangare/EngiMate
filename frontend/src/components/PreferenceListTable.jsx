@@ -1,5 +1,5 @@
 import './PreferenceListTable.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const PreferenceListTable = ({ colleges, allColleges, setColleges }) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -7,9 +7,29 @@ const PreferenceListTable = ({ colleges, allColleges, setColleges }) => {
     const [showModal, setShowModal] = useState(false);
     const [modalSearchTerm, setModalSearchTerm] = useState('');
     const [selectedColleges, setSelectedColleges] = useState([]);
-    const [newlyAddedCodes, setNewlyAddedCodes] = useState([]);
+    
+    // Load newlyAddedCodes from localStorage
+    const [newlyAddedCodes, setNewlyAddedCodes] = useState(() => {
+        try {
+            const saved = localStorage.getItem('newlyAddedCodes');
+            return saved ? JSON.parse(saved) : [];
+        } catch (err) {
+            console.error('Error loading newlyAddedCodes:', err);
+            return [];
+        }
+    });
+    
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [collegeToDelete, setCollegeToDelete] = useState(null);
+
+    // Save newlyAddedCodes to localStorage whenever it changes
+    useEffect(() => {
+        try {
+            localStorage.setItem('newlyAddedCodes', JSON.stringify(newlyAddedCodes));
+        } catch (err) {
+            console.error('Error saving newlyAddedCodes:', err);
+        }
+    }, [newlyAddedCodes]);
 
     const cutoffFields = [
         { key: 'gopen', label: 'GOPEN' },

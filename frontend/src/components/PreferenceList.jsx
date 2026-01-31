@@ -3,8 +3,23 @@ import './PreferenceList.css';
 import PreferenceListTable from './PreferenceListTable';
 
 const PreferenceList = ({ onBack }) => {
-    const [examType, setExamType] = useState('MHT_CET'); // MHT_CET, MHT_JEE, JEE_MAINS
-    const [formData, setFormData] = useState({
+    // Load saved data from localStorage
+    const loadSavedData = () => {
+        try {
+            const savedData = localStorage.getItem('preferenceListData');
+            if (savedData) {
+                return JSON.parse(savedData);
+            }
+        } catch (error) {
+            console.error('Error loading saved data:', error);
+        }
+        return null;
+    };
+
+    const savedData = loadSavedData();
+
+    const [examType, setExamType] = useState(savedData?.examType || 'MHT_CET'); // MHT_CET, MHT_JEE, JEE_MAINS
+    const [formData, setFormData] = useState(savedData?.formData || {
         generalRank: '',
         aiRank: '',
         caste: 'OPEN',
@@ -14,8 +29,8 @@ const PreferenceList = ({ onBack }) => {
         city: ['All'],
         branchCategory: ['All']
     });
-    const [colleges, setColleges] = useState([]);
-    const [allColleges, setAllColleges] = useState([]);
+    const [colleges, setColleges] = useState(savedData?.colleges || []);
+    const [allColleges, setAllColleges] = useState(savedData?.allColleges || []);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [cities, setCities] = useState([]);
@@ -37,12 +52,16 @@ const PreferenceList = ({ onBack }) => {
         fetchCities();
     }, []);
 
+    // Save data to localStorage whenever it changes
     useEffect(() => {
-        // Clear colleges when exam type changes
-        setColleges([]);
-        setAllColleges([]);
-        setError('');
-    }, [examType]);
+        const dataToSave = {
+            examType,
+            formData,
+            colleges,
+            allColleges
+        };
+        localStorage.setItem('preferenceListData', JSON.stringify(dataToSave));
+    }, [examType, formData, colleges, allColleges]);
 
     const fetchCities = async () => {
         try {
@@ -174,6 +193,14 @@ const PreferenceList = ({ onBack }) => {
             const data = await response.json();
             setColleges(data.colleges || data);
             setAllColleges(data.allColleges || []);
+            
+            // Scroll to results
+            setTimeout(() => {
+                const resultsSection = document.querySelector('.preference-results');
+                if (resultsSection) {
+                    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
         } catch (err) {
             setError('Error fetching colleges. Please try again.');
             console.error('Error:', err);
@@ -192,21 +219,39 @@ const PreferenceList = ({ onBack }) => {
                         <button
                             type="button"
                             className={`exam-btn ${examType === 'MHT_CET' ? 'active' : ''}`}
-                            onClick={() => setExamType('MHT_CET')}
+                            onClick={() => {
+                                setExamType('MHT_CET');
+                                setColleges([]);
+                                setAllColleges([]);
+                                setError('');
+                                localStorage.removeItem('newlyAddedCodes');
+                            }}
                         >
                             MHT CET
                         </button>
                         <button
                             type="button"
                             className={`exam-btn ${examType === 'MHT_JEE' ? 'active' : ''}`}
-                            onClick={() => setExamType('MHT_JEE')}
+                            onClick={() => {
+                                setExamType('MHT_JEE');
+                                setColleges([]);
+                                setAllColleges([]);
+                                setError('');
+                                localStorage.removeItem('newlyAddedCodes');
+                            }}
                         >
                             MHT CET + JEE MAINS
                         </button>
                         <button
                             type="button"
                             className={`exam-btn ${examType === 'JEE_MAINS' ? 'active' : ''}`}
-                            onClick={() => setExamType('JEE_MAINS')}
+                            onClick={() => {
+                                setExamType('JEE_MAINS');
+                                setColleges([]);
+                                setAllColleges([]);
+                                setError('');
+                                localStorage.removeItem('newlyAddedCodes');
+                            }}
                         >
                             JEE MAINS (ALL INDIA)
                         </button>

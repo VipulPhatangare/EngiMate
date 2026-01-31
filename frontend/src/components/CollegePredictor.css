@@ -201,13 +201,32 @@
 
 .checkbox-group {
     display: block;
+    text-align: left;
+    width: 100%;
 }
 
 .checkbox-group label {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     cursor: pointer;
     margin: 0;
+    width: fit-content;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #14B8A6;
 }
 
 .checkbox-group input[type="checkbox"] {

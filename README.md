@@ -221,6 +221,88 @@ Headers: Authorization: Bearer <token>
 - Admin panel
 - Real-time notifications
 
+## 🌐 Production Deployment
+
+### Live URL
+**https://engimate.synthomind.cloud**
+
+### Deployment Information
+
+- **Server**: Hostinger VPS
+- **IP Address**: 194.238.17.210
+- **Port**: 2050
+- **Process Manager**: PM2
+- **Web Server**: Nginx
+- **Repository**: https://github.com/VipulPhatangare/EngiMate.git
+
+### Deployment Files
+
+This project includes comprehensive deployment configurations:
+
+- `ecosystem.config.js` - PM2 process manager configuration
+- `nginx.conf` - Nginx web server configuration
+- `DEPLOYMENT.md` - Complete deployment guide with step-by-step instructions
+- `deploy.sh` - Automated deployment script
+- `pre-deploy-check.sh` - Pre-deployment validation script
+- `.env.production` - Production environment templates (backend & frontend)
+
+### Quick Deployment
+
+1. **Run Pre-deployment Check**
+   ```bash
+   bash pre-deploy-check.sh
+   ```
+
+2. **Commit and Push Changes**
+   ```bash
+   git add .
+   git commit -m "Deploy to production"
+   git push origin main
+   ```
+
+3. **On VPS Server**
+   ```bash
+   # Clone or pull latest changes
+   cd /var/www/engimate
+   git pull origin main
+   
+   # Run deployment script
+   bash deploy.sh
+   ```
+
+For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)
+
+### Environment Configuration
+
+#### Backend Production (.env)
+```env
+PORT=5000
+NODE_ENV=production
+MONGODB_URI=your_mongodb_uri
+SUPABASE_URL=your_supabase_url
+SUPABASE_KEY=your_supabase_key
+JWT_SECRET=your_jwt_secret
+CORS_ORIGIN=https://engimate.synthomind.cloud
+```
+
+#### Frontend Production (.env.production)
+```env
+VITE_API_URL=https://engimate.synthomind.cloud/api
+```
+
+### Monitoring
+
+```bash
+# Check application status
+pm2 status
+
+# View logs
+pm2 logs engimate-backend
+
+# Monitor resources
+pm2 monit
+```
+
 ## License
 
-All rights reserved © 2025 Engimate
+All rights reserved © 2025-2026 Engimate
