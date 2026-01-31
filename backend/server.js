@@ -48,14 +48,6 @@ app.get('/api/health', (req, res) => {
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
-// Admin Routes
-const adminRoutes = require('./routes/admin');
-app.use('/api/admin', adminRoutes);
-
-// Notification Routes
-const notificationRoutes = require('./routes/notifications');
-app.use('/api/notifications', notificationRoutes);
-
 // College Routes (Supabase)
 const collegeRoutes = require('./routes/colleges');
 app.use('/api/colleges', collegeRoutes);
@@ -73,5 +65,6 @@ app.use('/api/collegePredictor', collegePredictorRoutes);
 
 // Start server
 app.listen(PORT, () => {
-  // Server is running
+  console.log(`🚀 Server is running on port ${PORT}`);
+  console.log(`📊 MongoDB: ${mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected'}`);
 });
