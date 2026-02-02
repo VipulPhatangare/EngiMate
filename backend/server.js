@@ -34,30 +34,6 @@ mongoose.connection.on('disconnected', () => {
   console.log('🔌 Mongoose disconnected from MongoDB');
 });
 
-// Supabase Connection Test
-const testSupabaseConnection = async () => {
-  try {
-    // Simple test query - just check if we can connect
-    const { data, error } = await supabase
-      .from('colleges')
-      .select('*')
-      .limit(1)
-    
-    if (error) {
-      console.error('⚠️ Supabase Error:', error.message || error.details || JSON.stringify(error));
-      console.log('💡 This may be normal if the "colleges" table doesn\'t exist yet');
-    } else {
-      console.log('✅ Supabase Connected Successfully');
-      console.log(`   Found ${data ? data.length : 0} record(s) in colleges table`);
-    }
-  } catch (err) {
-    console.error('⚠️ Supabase Connection Error:', err.message || err.toString());
-    console.log('💡 Tip: Check your SUPABASE_URL and SUPABASE_KEY in .env file');
-  }
-}
-
-testSupabaseConnection();
-
 // Routes
 app.get('/', (req, res) => {
   res.json({ message: 'Engimate API Server Running' });
