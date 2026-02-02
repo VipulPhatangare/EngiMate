@@ -12,13 +12,17 @@ router.get('/fetchcity', async (req, res) => {
             .not('city', 'is', null)
             .order('city', { ascending: true });
         
-        if (error) throw error;
+        if (error) {
+            console.error('❌ Supabase error in fetchcity:', error);
+            throw error;
+        }
         
         // Trim and get distinct cities
         const distinctCities = [...new Set(data.map(item => item.city.trim()))];
         res.json(distinctCities.map(city => ({ city })));
     } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch cities' });
+        console.error('❌ Error in fetchcity route:', err);
+        res.status(500).json({ error: 'Failed to fetch cities', details: err.message });
     }
 });
 
