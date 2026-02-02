@@ -94,26 +94,27 @@ const CollegePredictorCard = ({ college, srNo, showProbability = true }) => {
                     {college.city}
                 </p>
 
-                {/* JEE specific fields - airank and aiper */}
-                {(college.airank || college.aiper) && (
-                    <div className="jee-stats">
-                        {college.airank && (
-                            <div className="jee-stat-item">
-                                <span className="jee-label">AI Rank:</span>
-                                <span className="jee-value">{college.airank}</span>
-                            </div>
-                        )}
-                        {college.aiper && (
-                            <div className="jee-stat-item">
-                                <span className="jee-label">AI Percentile:</span>
-                                <span className="jee-value">{college.aiper.toFixed(4)}%</span>
-                            </div>
-                        )}
-                    </div>
-                )}
-
                 <div className="cutoffs-section">
                     <h4 className="cutoffs-title">Cutoff Details</h4>
+                    
+                    {/* JEE specific fields - airank and aiper */}
+                    {(college.airank || college.aiper) && (
+                        <div className="jee-stats">
+                            {college.airank && (
+                                <div className="jee-stat-item">
+                                    <span className="jee-label">AI Rank:</span>
+                                    <span className="jee-value">{college.airank}</span>
+                                </div>
+                            )}
+                            {college.aiper && (
+                                <div className="jee-stat-item">
+                                    <span className="jee-label">AI Percentile:</span>
+                                    <span className="jee-value">{college.aiper.toFixed(4)}%</span>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                    
                     <div className="cutoffs-grid">
                         {displayCutoffs.map((cutoff, index) => {
                             const { rank, percentile } = parseCutoff(cutoff.value);

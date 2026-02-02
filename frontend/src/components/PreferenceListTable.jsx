@@ -350,7 +350,7 @@ const PreferenceListTable = ({ colleges, allColleges, setColleges }) => {
                             return (
                                 <tr key={college.choice_code} className={rowClass}>
                                     <td className="col-sr" data-label="Sr No.">{index + 1}</td>
-                                    <td className="col-choice-code" data-label="Choice Code">{college.choice_code}</td>
+                                    <td className="col-choice-code" data-label="Choice Code" data-sr={index + 1}>{college.choice_code}</td>
                                     <td className="col-college" data-label="College">
                                         <div className="college-info">
                                             <span className="college-name">{college.college_name}</span>

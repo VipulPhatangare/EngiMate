@@ -27,18 +27,39 @@ function Dashboard({ user, onLogout, onUserUpdate }) {
 
   const savedState = loadSavedState();
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [showProfile, setShowProfile] = useState(savedState?.showProfile || false)
   const [selectedCollege, setSelectedCollege] = useState(savedState?.selectedCollege || null)
   const [showTopColleges, setShowTopColleges] = useState(savedState?.showTopColleges || false)
   const [showCollegePredictor, setShowCollegePredictor] = useState(savedState?.showCollegePredictor || false)
   const [showPreferenceList, setShowPreferenceList] = useState(savedState?.showPreferenceList || false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [topCollegesSearchData, setTopCollegesSearchData] = useState(savedState?.topCollegesSearchData || {
     colleges: [],
     selectedUniversity: 'All',
     selectedCities: ['All'],
     currentPage: 1
   })
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen)
+  }
+
+  const closeSidebar = () => {
+    setSidebarOpen(false)
+  }
+
+  // Prevent body scroll when sidebar is open on mobile
+  useEffect(() => {
+    if (sidebarOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [sidebarOpen])
 
   // Save dashboard state to localStorage whenever it changes
   useEffect(() => {
@@ -52,14 +73,6 @@ function Dashboard({ user, onLogout, onUserUpdate }) {
     };
     localStorage.setItem('dashboardState', JSON.stringify(stateToSave));
   }, [showProfile, selectedCollege, showTopColleges, showCollegePredictor, showPreferenceList, topCollegesSearchData]);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen)
-  }
-
-  const closeSidebar = () => {
-    setIsSidebarOpen(false)
-  }
 
   const handleCollegeSelect = (college) => {
     console.log('Dashboard received college:', college)
@@ -186,6 +199,13 @@ function Dashboard({ user, onLogout, onUserUpdate }) {
             <span className="logo-text">Engimate</span>
           </div>
           
+          {/* Hamburger Menu for Mobile */}
+          <button className="hamburger" onClick={toggleSidebar} aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          
           {/* Desktop Navigation */}
           <div className="nav-links desktop-nav">
             <a href="#home" onClick={(e) => { e.preventDefault(); handleBackToHome(); }}>Home</a>
@@ -196,32 +216,27 @@ function Dashboard({ user, onLogout, onUserUpdate }) {
             <span className="user-name">Hi, {user?.name}</span>
             <button onClick={onLogout} className="btn-nav">Logout</button>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button className="hamburger" onClick={toggleSidebar}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
         </div>
       </nav>
 
       {/* Mobile Sidebar */}
-      <div className={`sidebar ${isSidebarOpen ? 'sidebar-open' : ''}`}>
-        <button className="close-btn" onClick={closeSidebar}>&times;</button>
+      {sidebarOpen && <div className="overlay" onClick={closeSidebar}></div>}
+      <div 
+        className={`sidebar ${sidebarOpen ? 'sidebar-open' : ''}`}
+      >
+        <button className="close-btn" onClick={closeSidebar} aria-label="Close menu">
+          &times;
+        </button>
         <div className="sidebar-content">
           <a href="#home" onClick={(e) => { e.preventDefault(); handleBackToHome(); closeSidebar(); }}>Home</a>
           <a href="#top-colleges" onClick={(e) => { e.preventDefault(); handleShowTopColleges(); closeSidebar(); }}>Top Colleges</a>
           <a href="#college-predictor" onClick={(e) => { e.preventDefault(); handleShowCollegePredictor(); closeSidebar(); }}>College Predictor</a>
           <a href="#preference-list" onClick={(e) => { e.preventDefault(); handleShowPreferenceList(); closeSidebar(); }}>Preference List</a>
           <a href="#profile" onClick={(e) => { e.preventDefault(); handleShowProfile(); closeSidebar(); }}>Profile</a>
-          <span className="user-name-mobile">Hi, {user?.name}</span>
-          <button onClick={() => { onLogout(); closeSidebar(); }} className="btn-sidebar">Logout</button>
+          <div className="user-name-mobile">Hi, {user?.name}</div>
+          <button onClick={() => { onLogout(); closeSidebar(); }} className="btn-sidebar btn-sidebar-primary">Logout</button>
         </div>
       </div>
-
-      {/* Overlay */}
-      {isSidebarOpen && <div className="overlay" onClick={closeSidebar}></div>}
 
       {/* Main Content - Conditional rendering */}
       {selectedCollege ? (

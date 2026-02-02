@@ -421,7 +421,11 @@
 }
 
 @media (max-width: 480px) {
-    /* Stack table for mobile */
+    /* Stack table for mobile - Match CollegePredictorCard design */
+    .preference-table-container {
+        padding: 0 0.5rem;
+    }
+
     .action-buttons {
         flex-direction: column;
         gap: 0.75rem;
@@ -435,8 +439,9 @@
     }
 
     .table-wrapper {
-        border-radius: 8px;
-        margin: 0 -0.5rem;
+        border-radius: 0;
+        margin: 0;
+        box-shadow: none;
     }
 
     .preference-table,
@@ -454,116 +459,276 @@
         left: -9999px;
     }
 
+    /* Card container - match predictor card */
     .preference-table tbody tr {
-        margin-bottom: 1.25rem;
-        border: 2px solid #e0e0e0;
-        border-radius: 10px;
+        margin-bottom: 1rem;
+        border: none;
+        border-radius: 12px;
         padding: 0;
         overflow: hidden;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        background: white;
+        border-left: 5px solid #64748b;
+        transition: all 0.3s ease;
+    }
+
+    .preference-table tbody tr:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
     }
 
     .preference-table tbody tr.top-10-row {
-        border-color: #28a745;
-        background-color: #d4edda;
+        border-left-color: #22c55e;
+        background: linear-gradient(to right, rgba(34, 197, 94, 0.02) 0%, white 100%);
     }
 
     .preference-table tbody tr.newly-added-row {
-        border-color: #ffc107;
-        background-color: #fff3cd;
+        border-left-color: #f59e0b;
+        background: linear-gradient(to right, rgba(245, 158, 11, 0.02) 0%, white 100%);
     }
 
     .preference-table td {
         border: none;
-        position: relative;
-        padding: 0.875rem 1rem;
-        padding-left: 42%;
+        padding: 0;
         text-align: left;
-        border-bottom: 1px solid #f0f0f0;
-    }
-
-    .preference-table td:last-child {
         border-bottom: none;
     }
 
-    .preference-table td::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 1rem;
-        width: 38%;
+    /* Hide Sr No column on mobile */
+    .preference-table .col-sr {
+        display: none;
+    }
+
+    /* Sr No. + Choice Code header - match predictor card */
+    .preference-table .col-choice-code {
+        padding: 0.75rem 1rem !important;
+        background: linear-gradient(135deg, #008080 0%, #006666 100%) !important;
+        color: white !important;
         font-weight: 600;
-        color: #008080;
-        font-size: 0.85rem;
+        font-size: 0.95rem;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        border-radius: 0;
+        margin: 0;
+        position: relative;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .preference-table .col-choice-code::before {
+        content: '#' attr(data-sr);
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: white !important;
+        margin-right: 1rem;
+        padding: 0;
+        text-transform: none;
+        letter-spacing: 0;
+        position: static;
+        width: auto;
+        flex-shrink: 0;
+        background: none !important;
+    }
+
+    /* Card body - properly styled sections */
+    .preference-table .col-college {
+        padding: 1rem 1rem 0.5rem 1rem;
+    }
+
+    .preference-table .col-college::before {
+        display: none;
+    }
+
+    .preference-table .col-college .college-name {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #1e293b;
         line-height: 1.4;
     }
 
-    .preference-table td:first-child {
-        background: linear-gradient(135deg, #008080 0%, #006666 100%);
-        color: white;
-        text-align: center;
-        padding: 1rem;
-        font-size: 1.3rem;
-        font-weight: 700;
-        border-radius: 0;
-        margin-bottom: 0;
-        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    .preference-table .col-branch {
+        padding: 0 1rem 0.5rem 1rem;
     }
 
-    .preference-table td:first-child::before {
-        content: 'Sr No. ';
-        position: static;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: rgba(255, 255, 255, 0.9);
+    .preference-table .col-branch::before {
+        display: none;
     }
 
-    .col-actions {
-        text-align: center;
-        padding: 1rem;
-        background: #f8f9fa;
-    }
-
-    .col-actions::before {
-        position: static;
-        display: block;
-        margin-bottom: 0.75rem;
-        width: 100%;
-        text-align: center;
-    }
-
-    .delete-btn {
-        width: 100%;
-        max-width: 250px;
-        padding: 0.875rem;
+    .preference-table .col-branch .branch-name {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
         font-size: 0.95rem;
+        font-weight: 600;
+        color: #14B8A6;
+        padding: 0.4rem;
+        background: #f0fdfa;
+        border-radius: 6px;
     }
 
-    .delete-btn svg {
-        width: 18px;
-        height: 18px;
+    .preference-table .col-branch .branch-name::before {
+        content: '🎓';
+        font-size: 1.2rem;
+    }
+
+    .preference-table .col-city {
+        padding: 0 1rem 0.5rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: #64748b;
+        font-weight: normal;
+    }
+
+    .preference-table .col-city::before {
+        content: '📍';
+        display: inline;
+        font-size: 1rem;
+        color: inherit;
+        text-transform: none;
+        letter-spacing: 0;
+        font-weight: normal;
+        position: static;
+        width: auto;
+    }
+
+    .preference-table .col-university {
+        padding: 0 1rem 0.75rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: #64748b;
+        font-weight: normal;
+    }
+
+    .preference-table .col-university::before {
+        content: '🏛️';
+        display: inline;
+        font-size: 1rem;
+        color: inherit;
+        text-transform: none;
+        letter-spacing: 0;
+        font-weight: normal;
+        position: static;
+        width: auto;
+    }
+
+    /* Cutoffs section - match predictor */
+    .preference-table .col-cutoffs {
+        padding: 0.75rem 1rem 1rem 1rem;
+        background: transparent;
+        border-top: 2px solid #f1f5f9;
+        margin: 0;
+    }
+
+    .preference-table .col-cutoffs::before {
+        content: 'Cutoff Details';
+        display: block;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #334155;
+        margin-bottom: 0.5rem;
+        text-transform: none;
+        letter-spacing: 0;
+        position: static;
+        width: auto;
+    }
+
+    .cutoffs-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
     }
 
     .cutoff-item {
+        display: flex;
         flex-direction: column;
         align-items: flex-start;
+        padding: 0.4rem;
+        background: #f8fafc;
+        border-radius: 6px;
+        border-left: 3px solid #14B8A6;
         gap: 0.25rem;
-        padding: 0.5rem 0.75rem;
+        box-shadow: none;
     }
 
     .cutoff-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #475569;
         min-width: auto;
-        font-size: 0.8rem;
     }
 
     .cutoff-value {
         font-size: 0.9rem;
-        word-break: break-word;
+        font-weight: 700;
+        color: #1e293b;
+        text-align: left;
+        display: block;
     }
 
-    .college-name,
-    .branch-name {
-        font-size: 0.95rem;
-        line-height: 1.5;
+    .no-cutoffs {
+        font-size: 0.85rem;
+        color: #94a3b8;
+        font-style: italic;
+        padding: 0;
+    }
+
+    /* Actions at bottom */
+    .col-actions {
+        padding: 0;
+        background: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-top: none;
+        margin-top: 0.75rem;
+    }
+
+    .col-actions::before {
+        display: none;
+    }
+
+    .delete-btn {
+        width: 100%;
+        max-width: none;
+        padding: 1rem;
+        font-size: 1rem;
+        border-radius: 0 0 11px 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        margin: 0;
+        border: none;
+        border-top: 2px solid #f0f0f0;
+        background: #dc3545;
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    .delete-btn:hover {
+        background: #c82333;
+    }
+
+    .delete-btn.disabled {
+        background: #dc8a94;
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    .delete-btn svg {
+        display: none;
+    }
+
+    .delete-btn::after {
+        content: 'DELETE';
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 }
 
