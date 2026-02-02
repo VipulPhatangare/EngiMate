@@ -65,7 +65,7 @@ const PreferenceList = ({ onBack }) => {
 
     const fetchCities = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/preferenceList/fetchcity');
+            const response = await fetch('http://localhost:5050/api/preferenceList/fetchcity');
             const data = await response.json();
             setCities(data);
         } catch (err) {
@@ -142,7 +142,7 @@ const PreferenceList = ({ onBack }) => {
 
             if (examType === 'MHT_CET') {
                 // MHT CET only
-                url = 'http://localhost:5000/api/preferenceList/collegePreferenceList';
+                url = 'http://localhost:5050/api/preferenceList/collegePreferenceList';
                 requestBody = {
                     generalRank: parseInt(formData.generalRank),
                     caste: formData.caste,
@@ -155,7 +155,7 @@ const PreferenceList = ({ onBack }) => {
                 };
             } else if (examType === 'MHT_JEE') {
                 // MHT CET + JEE MAINS
-                url = 'http://localhost:5000/api/preferenceList/collegePreferenceList';
+                url = 'http://localhost:5050/api/preferenceList/collegePreferenceList';
                 requestBody = {
                     generalRank: parseInt(formData.generalRank),
                     aiRank: parseInt(formData.aiRank),
@@ -169,7 +169,7 @@ const PreferenceList = ({ onBack }) => {
                 };
             } else if (examType === 'JEE_MAINS') {
                 // JEE MAINS (ALL INDIA) only
-                url = 'http://localhost:5000/api/preferenceList/collegePreferenceListAI';
+                url = 'http://localhost:5050/api/preferenceList/collegePreferenceListAI';
                 requestBody = {
                     aiRank: parseInt(formData.aiRank),
                     gender: formData.gender,

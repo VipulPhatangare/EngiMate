@@ -3,7 +3,7 @@ const router = express.Router()
 const supabase = require('../utils/supabase')
 
 
-// http://localhost:5000/api/colleges
+// http://localhost:5050/api/colleges
 
 // Helper function to retry Supabase queries
 async function retrySupabaseQuery(queryFn, maxRetries = 3, delay = 2000) {

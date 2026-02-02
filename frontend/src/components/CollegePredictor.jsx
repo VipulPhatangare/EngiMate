@@ -67,7 +67,7 @@ const CollegePredictor = ({ onBack }) => {
     const fetchCities = async () => {
         try {
             setLoadingCities(true);
-            const response = await axios.get('http://localhost:5000/api/collegePredictor/fetchcity');
+            const response = await axios.get('http://localhost:5050/api/collegePredictor/fetchcity');
             setCities(response.data);
         } catch (err) {
             setError('Failed to load cities. Please refresh the page.');
@@ -184,7 +184,7 @@ const CollegePredictor = ({ onBack }) => {
                 };
 
                 response = await axios.post(
-                    'http://localhost:5000/api/collegePredictor/collegePredictorList',
+                    'http://localhost:5050/api/collegePredictor/collegePredictorList',
                     payload
                 );
             } else if (examType === 'jee') {
@@ -197,7 +197,7 @@ const CollegePredictor = ({ onBack }) => {
                 };
 
                 response = await axios.post(
-                    'http://localhost:5000/api/collegePredictor/collegePredictorListAI',
+                    'http://localhost:5050/api/collegePredictor/collegePredictorListAI',
                     payload
                 );
             }

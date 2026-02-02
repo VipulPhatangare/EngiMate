@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const supabase = require('../utils/supabase')
 
-// http://localhost:5000/api/preferenceList
+// http://localhost:5050/api/preferenceList
 
 router.get('/fetchcity', async (req, res) => {
     try {

@@ -1,6 +1,6 @@
 // API Configuration
 // API Configuration - uses environment variable for production
-export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5050'
 
 // API Helper Functions
 export const apiCall = async (endpoint, options = {}) => {

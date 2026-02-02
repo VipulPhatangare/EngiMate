@@ -9,7 +9,7 @@ function NotificationSlider() {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/notifications/active')
+        const response = await fetch('http://localhost:5050/api/notifications/active')
         const data = await response.json()
         if (data.success && data.notifications.length > 0) {
           setNotifications(data.notifications)

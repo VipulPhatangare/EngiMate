@@ -5,31 +5,54 @@ const supabase = require('./utils/supabase');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5050;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
+// MongoDB Connection with proper error handling
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => {})
-  .catch((err) => {});
+  .then(() => {
+    console.log('✅ MongoDB Connected Successfully');
+  })
+  .catch((err) => {
+    console.error('❌ MongoDB Connection Error:', err.message);
+    process.exit(1);
+  });
+
+// MongoDB connection event listeners
+mongoose.connection.on('connected', () => {
+  console.log('🔗 Mongoose connected to MongoDB');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.error('⚠️ Mongoose connection error:', err.message);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('🔌 Mongoose disconnected from MongoDB');
+});
 
 // Supabase Connection Test
 const testSupabaseConnection = async () => {
   try {
+    // Simple test query - just check if we can connect
     const { data, error } = await supabase
       .from('colleges')
-      .select('count', { count: 'exact', head: true })
+      .select('*')
+      .limit(1)
     
     if (error) {
-      // Supabase Connection Error
+      console.error('⚠️ Supabase Error:', error.message || error.details || JSON.stringify(error));
+      console.log('💡 This may be normal if the "colleges" table doesn\'t exist yet');
     } else {
-      // Supabase Connected Successfully
+      console.log('✅ Supabase Connected Successfully');
+      console.log(`   Found ${data ? data.length : 0} record(s) in colleges table`);
     }
   } catch (err) {
-    // Supabase Connection Error
+    console.error('⚠️ Supabase Connection Error:', err.message || err.toString());
+    console.log('💡 Tip: Check your SUPABASE_URL and SUPABASE_KEY in .env file');
   }
 }
 
@@ -65,6 +88,9 @@ app.use('/api/collegePredictor', collegePredictorRoutes);
 
 // Start server
 app.listen(PORT, () => {
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
   console.log(`🚀 Server is running on port ${PORT}`);
-  console.log(`📊 MongoDB: ${mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected'}`);
+  console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`📊 MongoDB Status: ${mongoose.connection.readyState === 1 ? 'Connected ✅' : 'Connecting... ⏳'}`);
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 });

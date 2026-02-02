@@ -31,7 +31,7 @@ function ForgotPassword({ onClose, onSwitchToSignIn, onResetSuccess }) {
     setLoading(true)
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/forgot-password', {
+      const response = await fetch('http://localhost:5050/api/auth/forgot-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ function ForgotPassword({ onClose, onSwitchToSignIn, onResetSuccess }) {
     setError('')
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/forgot-password', {
+      const response = await fetch('http://localhost:5050/api/auth/forgot-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -92,7 +92,7 @@ function ForgotPassword({ onClose, onSwitchToSignIn, onResetSuccess }) {
     setLoading(true)
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/verify-forgot-otp', {
+      const response = await fetch('http://localhost:5050/api/auth/verify-forgot-otp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -132,7 +132,7 @@ function ForgotPassword({ onClose, onSwitchToSignIn, onResetSuccess }) {
     setLoading(true)
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/reset-password', {
+      const response = await fetch('http://localhost:5050/api/auth/reset-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
