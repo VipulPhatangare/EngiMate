@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './Auth.css'
+import { API_URL } from '../utils/api'
 
 function SignUp({ onClose, onSwitchToSignIn, onSignUpSuccess }) {
   const [formData, setFormData] = useState({
@@ -47,7 +48,7 @@ function SignUp({ onClose, onSwitchToSignIn, onSignUpSuccess }) {
     setLoading(true)
 
     try {
-      const response = await fetch('http://localhost:5050/api/auth/register', {
+      const response = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -78,7 +79,7 @@ function SignUp({ onClose, onSwitchToSignIn, onSignUpSuccess }) {
     setError('')
 
     try {
-      const response = await fetch('http://localhost:5050/api/auth/resend-otp', {
+      const response = await fetch(`${API_URL}/api/auth/resend-otp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -122,7 +123,7 @@ function SignUp({ onClose, onSwitchToSignIn, onSignUpSuccess }) {
     setLoading(true)
 
     try {
-      const response = await fetch('http://localhost:5050/api/auth/verify-otp', {
+      const response = await fetch(`${API_URL}/api/auth/verify-otp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './PreferenceList.css';
 import PreferenceListTable from './PreferenceListTable';
+import { API_URL } from '../utils/api';
 
 const PreferenceList = ({ onBack }) => {
     // Load saved data from localStorage
@@ -65,7 +66,7 @@ const PreferenceList = ({ onBack }) => {
 
     const fetchCities = async () => {
         try {
-            const response = await fetch('http://localhost:5050/api/preferenceList/fetchcity');
+            const response = await fetch(`${API_URL}/api/preferenceList/fetchcity`);
             const data = await response.json();
             setCities(data);
         } catch (err) {
@@ -142,7 +143,7 @@ const PreferenceList = ({ onBack }) => {
 
             if (examType === 'MHT_CET') {
                 // MHT CET only
-                url = 'http://localhost:5050/api/preferenceList/collegePreferenceList';
+                url = `${API_URL}/api/preferenceList/collegePreferenceList`;
                 requestBody = {
                     generalRank: parseInt(formData.generalRank),
                     caste: formData.caste,
@@ -155,7 +156,7 @@ const PreferenceList = ({ onBack }) => {
                 };
             } else if (examType === 'MHT_JEE') {
                 // MHT CET + JEE MAINS
-                url = 'http://localhost:5050/api/preferenceList/collegePreferenceList';
+                url = `${API_URL}/api/preferenceList/collegePreferenceList`;
                 requestBody = {
                     generalRank: parseInt(formData.generalRank),
                     aiRank: parseInt(formData.aiRank),
@@ -169,7 +170,7 @@ const PreferenceList = ({ onBack }) => {
                 };
             } else if (examType === 'JEE_MAINS') {
                 // JEE MAINS (ALL INDIA) only
-                url = 'http://localhost:5050/api/preferenceList/collegePreferenceListAI';
+                url = `${API_URL}/api/preferenceList/collegePreferenceListAI`;
                 requestBody = {
                     aiRank: parseInt(formData.aiRank),
                     gender: formData.gender,

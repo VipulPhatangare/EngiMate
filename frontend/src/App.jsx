@@ -6,6 +6,7 @@ import ForgotPassword from './components/ForgotPassword'
 import Dashboard from './components/Dashboard'
 import AdminLogin from './components/AdminLogin'
 import AdminDashboard from './components/AdminDashboard'
+import { API_URL } from './utils/api'
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
@@ -41,7 +42,7 @@ function App() {
       // Regular user authentication check
       const token = localStorage.getItem('token')
       if (token) {
-        fetch('http://localhost:5050/api/auth/me', {
+        fetch(`${API_URL}/api/auth/me`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

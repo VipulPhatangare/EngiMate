@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './AdminDashboard.css'
 import ChatBot from './ChatBot'
+import { API_URL } from '../utils/api'
 
 function AdminDashboard({ admin, onLogout }) {
   const [activeTab, setActiveTab] = useState('overview')
@@ -33,7 +34,7 @@ function AdminDashboard({ admin, onLogout }) {
   const fetchStats = async () => {
     setLoading(true)
     try {
-      const response = await fetch('http://localhost:5050/api/admin/stats', {
+      const response = await fetch(`${API_URL}/api/admin/stats`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -52,7 +53,7 @@ function AdminDashboard({ admin, onLogout }) {
   const fetchUsers = async () => {
     setLoading(true)
     try {
-      const response = await fetch('http://localhost:5050/api/admin/users', {
+      const response = await fetch(`${API_URL}/api/admin/users`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -74,7 +75,7 @@ function AdminDashboard({ admin, onLogout }) {
     }
 
     try {
-      const response = await fetch(`http://localhost:5050/api/admin/users/${userId}`, {
+      const response = await fetch(`${API_URL}/api/admin/users/${userId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -96,7 +97,7 @@ function AdminDashboard({ admin, onLogout }) {
 
   const handleToggleVerification = async (userId, currentStatus) => {
     try {
-      const response = await fetch(`http://localhost:5050/api/admin/users/${userId}/verify`, {
+      const response = await fetch(`${API_URL}/api/admin/users/${userId}/verify`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +123,7 @@ function AdminDashboard({ admin, onLogout }) {
   const fetchNotifications = async () => {
     setLoading(true)
     try {
-      const response = await fetch('http://localhost:5050/api/notifications/all', {
+      const response = await fetch(`${API_URL}/api/notifications/all`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -152,8 +153,8 @@ function AdminDashboard({ admin, onLogout }) {
 
     try {
       const url = editingNotification
-        ? `http://localhost:5050/api/notifications/${editingNotification._id}`
-        : 'http://localhost:5050/api/notifications'
+        ? `${API_URL}/api/notifications/${editingNotification._id}`
+        : `${API_URL}/api/notifications`
       
       const response = await fetch(url, {
         method: editingNotification ? 'PUT' : 'POST',
@@ -201,7 +202,7 @@ function AdminDashboard({ admin, onLogout }) {
     }
 
     try {
-      const response = await fetch(`http://localhost:5050/api/notifications/${notificationId}`, {
+      const response = await fetch(`${API_URL}/api/notifications/${notificationId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -222,7 +223,7 @@ function AdminDashboard({ admin, onLogout }) {
 
   const handleToggleNotificationStatus = async (notificationId) => {
     try {
-      const response = await fetch(`http://localhost:5050/api/notifications/${notificationId}/toggle`, {
+      const response = await fetch(`${API_URL}/api/notifications/${notificationId}/toggle`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`

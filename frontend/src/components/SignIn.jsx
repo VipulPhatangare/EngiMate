@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './Auth.css'
+import { API_URL } from '../utils/api'
 
 function SignIn({ onClose, onSwitchToSignUp, onSwitchToForgotPassword, onLoginSuccess }) {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ function SignIn({ onClose, onSwitchToSignUp, onSwitchToForgotPassword, onLoginSu
     setLoading(true)
 
     try {
-      const response = await fetch('http://localhost:5050/api/auth/login', {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

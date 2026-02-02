@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CollegePredictor.css';
 import CollegePredictorCard from './CollegePredictorCard';
+import { API_URL } from '../utils/api';
 
 const CollegePredictor = ({ onBack }) => {
     // Load saved data from localStorage
@@ -67,7 +68,7 @@ const CollegePredictor = ({ onBack }) => {
     const fetchCities = async () => {
         try {
             setLoadingCities(true);
-            const response = await axios.get('http://localhost:5050/api/collegePredictor/fetchcity');
+            const response = await axios.get(`${API_URL}/api/collegePredictor/fetchcity`);
             setCities(response.data);
         } catch (err) {
             setError('Failed to load cities. Please refresh the page.');
@@ -184,7 +185,7 @@ const CollegePredictor = ({ onBack }) => {
                 };
 
                 response = await axios.post(
-                    'http://localhost:5050/api/collegePredictor/collegePredictorList',
+                    `${API_URL}/api/collegePredictor/collegePredictorList`,
                     payload
                 );
             } else if (examType === 'jee') {
@@ -197,7 +198,7 @@ const CollegePredictor = ({ onBack }) => {
                 };
 
                 response = await axios.post(
-                    'http://localhost:5050/api/collegePredictor/collegePredictorListAI',
+                    `${API_URL}/api/collegePredictor/collegePredictorListAI`,
                     payload
                 );
             }
