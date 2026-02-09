@@ -2,6 +2,8 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: 2rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .back-button {
@@ -15,11 +17,15 @@
     cursor: pointer;
     margin-bottom: 1rem;
     transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .back-button:hover {
     background: #008080;
     color: white;
+    transform: translateX(-3px);
 }
 
 .preference-list-container h1 {
@@ -51,6 +57,13 @@
 
 .form-row .form-group {
     margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
 }
 
 .form-group {
@@ -252,19 +265,34 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+    .preference-list-container {
+        padding: 1.75rem;
+    }
+}
+
 @media (max-width: 1024px) {
     .preference-list-container {
         padding: 1.5rem;
     }
 
-    .form-row {
-        grid-template-columns: 1fr;
+    .preference-list-container h1 {
+        font-size: 1.85rem;
+    }
+
+    .preference-form {
+        padding: 1.75rem;
     }
 }
 
 @media (max-width: 768px) {
     .preference-list-container {
-        padding: 1rem 0.75rem;
+        padding: 1rem;
+    }
+
+    .back-button {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.95rem;
     }
 
     .preference-list-container h1 {
@@ -334,7 +362,14 @@
 
 @media (max-width: 480px) {
     .preference-list-container {
-        padding: 0.5rem;
+        padding: 0.75rem;
+    }
+
+    .back-button {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        width: 100%;
+        justify-content: center;
     }
 
     .preference-list-container h1 {
@@ -380,7 +415,7 @@
     .checkbox-grid,
     .city-checkboxes-grid {
         flex-direction: column;
-        max-height: 220px;
+        max-height: 250px;
         padding: 0.5rem;
         gap: 0.4rem;
     }

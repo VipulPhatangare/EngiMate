@@ -1,6 +1,130 @@
 import { useState, useRef, useEffect } from 'react'
 import './ChatBot.css'
 
+// Typing Animation Component
+function TypingText({ text, speed = 15, onComplete }) {
+  const [displayedText, setDisplayedText] = useState('')
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isTyping, setIsTyping] = useState(true)
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(prev => prev + text[currentIndex])
+        setCurrentIndex(prev => prev + 1)
+      }, speed)
+      return () => clearTimeout(timeout)
+    } else {
+      setIsTyping(false)
+      if (onComplete) {
+        onComplete()
+      }
+    }
+  }, [currentIndex, text, speed, onComplete])
+
+  return (
+    <div className={isTyping ? 'typing-active' : ''}>
+      <FormattedMessage text={displayedText} />
+    </div>
+  )
+}
+
+// Format message with bullet points and structure
+function FormattedMessage({ text }) {
+  // Split text into lines
+  const lines = text.split('\n').filter(line => line.trim())
+  
+  return (
+    <div className="formatted-message">
+      {lines.map((line, index) => {
+        const trimmedLine = line.trim()
+        
+        // Main bullet point with colon (category headers like "College Name:", "Branches:")
+        if (trimmedLine.startsWith('*') && trimmedLine.includes(':')) {
+          const parts = trimmedLine.substring(1).split(':')
+          const label = parts[0].trim()
+          const value = parts.slice(1).join(':').trim()
+          
+          if (value) {
+            // Has value - show as label: value
+            return (
+              <div key={index} className="message-info-row">
+                <span className="info-label">{label}:</span>
+                <span className="info-value">{value}</span>
+              </div>
+            )
+          } else {
+            // No value - it's a section header
+            return (
+              <div key={index} className="message-section-header">
+                {label}
+              </div>
+            )
+          }
+        }
+        // Regular bullet point (starts with *)
+        else if (trimmedLine.startsWith('*')) {
+          return (
+            <div key={index} className="message-bullet">
+              <span className="bullet-icon">•</span>
+              <span>{trimmedLine.substring(1).trim()}</span>
+            </div>
+          )
+        }
+        // Sub-bullet or indented text (has multiple spaces at start)
+        else if (trimmedLine.startsWith('-') || /^\s{2,}/.test(line)) {
+          const content = trimmedLine.replace(/^-\s*/, '').trim()
+          // Check if it's a sub-category with colon
+          if (content.includes(':')) {
+            const parts = content.split(':')
+            const label = parts[0].trim()
+            const value = parts.slice(1).join(':').trim()
+            
+            return (
+              <div key={index} className="message-sub-info">
+                <span className="sub-info-label">{label}:</span>
+                <span className="sub-info-value">{value}</span>
+              </div>
+            )
+          }
+          return (
+            <div key={index} className="message-sub-bullet">
+              <span className="sub-bullet-icon">◦</span>
+              <span>{content}</span>
+            </div>
+          )
+        }
+        // Regular text or summary
+        else {
+          // Check if it's a summary/conclusion line
+          if (trimmedLine.toLowerCase().startsWith('summarized') || 
+              trimmedLine.toLowerCase().startsWith('summary') ||
+              trimmedLine.toLowerCase().startsWith('conclusion')) {
+            return (
+              <div key={index} className="message-summary-header">
+                {trimmedLine}
+              </div>
+            )
+          }
+          // Check if line is all caps (might be a heading)
+          else if (trimmedLine === trimmedLine.toUpperCase() && trimmedLine.length > 3) {
+            return (
+              <div key={index} className="message-caps-header">
+                {trimmedLine}
+              </div>
+            )
+          }
+          return (
+            <div key={index} className="message-text">
+              {trimmedLine}
+            </div>
+          )
+        }
+      })}
+    </div>
+  )
+}
+
 function ChatBot() {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState([
@@ -8,7 +132,8 @@ function ChatBot() {
       id: 1,
       text: 'Hi! I\'m Engimate Assistant. How can I help you today?',
       sender: 'bot',
-      timestamp: new Date()
+      timestamp: new Date(),
+      isTyping: false
     }
   ])
   const [inputMessage, setInputMessage] = useState('')
@@ -70,7 +195,8 @@ function ChatBot() {
         id: Date.now() + 1,
         text: botResponseText,
         sender: 'bot',
-        timestamp: new Date()
+        timestamp: new Date(),
+        isTyping: true
       }
 
       setMessages(prev => [...prev, botMessage])
@@ -81,7 +207,8 @@ function ChatBot() {
         id: Date.now() + 1,
         text: 'Sorry, I\'m having trouble connecting. Please try again later.',
         sender: 'bot',
-        timestamp: new Date()
+        timestamp: new Date(),
+        isTyping: false
       }
 
       setMessages(prev => [...prev, errorMessage])
@@ -131,7 +258,23 @@ function ChatBot() {
               )}
               <div className="message-content">
                 <div className="message-bubble">
-                  {message.text}
+                  {message.sender === 'bot' && message.isTyping ? (
+                    <TypingText 
+                      text={message.text} 
+                      speed={15}
+                      onComplete={() => {
+                        setMessages(prev => 
+                          prev.map(msg => 
+                            msg.id === message.id ? { ...msg, isTyping: false } : msg
+                          )
+                        )
+                      }}
+                    />
+                  ) : message.sender === 'bot' ? (
+                    <FormattedMessage text={message.text} />
+                  ) : (
+                    message.text
+                  )}
                 </div>
                 <div className="message-time">
                   {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

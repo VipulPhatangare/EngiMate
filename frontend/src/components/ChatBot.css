@@ -247,6 +247,167 @@
   color: white;
 }
 
+/* Formatted Message Styles */
+.formatted-message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.message-section-header {
+  font-weight: 700;
+  color: #008080;
+  font-size: 1rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 2px solid rgba(0, 128, 128, 0.3);
+}
+
+.message-section-header:first-child {
+  margin-top: 0;
+}
+
+.message-info-row {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  background: rgba(0, 128, 128, 0.05);
+  border-radius: 6px;
+  align-items: flex-start;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #006666;
+  min-width: fit-content;
+  flex-shrink: 0;
+}
+
+.info-value {
+  color: #2c3e50;
+  word-wrap: break-word;
+  flex: 1;
+}
+
+.message-sub-info {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.25rem 0 0.25rem 1.5rem;
+  align-items: flex-start;
+}
+
+.sub-info-label {
+  font-weight: 600;
+  color: #008080;
+  font-size: 0.9rem;
+  min-width: fit-content;
+  flex-shrink: 0;
+}
+
+.sub-info-value {
+  color: #4a5568;
+  font-size: 0.9rem;
+  word-wrap: break-word;
+  flex: 1;
+}
+
+.message-header {
+  font-weight: 700;
+  color: #008080;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid rgba(0, 128, 128, 0.2);
+}
+
+.message-header:first-child {
+  margin-top: 0;
+}
+
+.message-bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding-left: 0.25rem;
+}
+
+.bullet-icon {
+  color: #008080;
+  font-weight: bold;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+
+.message-bullet span:last-child {
+  flex: 1;
+  line-height: 1.6;
+}
+
+.message-sub-bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding-left: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.sub-bullet-icon {
+  color: #008080;
+  font-weight: bold;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+
+.message-sub-bullet span:last-child {
+  flex: 1;
+  line-height: 1.5;
+  color: #4a5568;
+}
+
+.message-text {
+  line-height: 1.6;
+  padding: 0.25rem 0;
+}
+
+.message-summary-header {
+  font-weight: 700;
+  color: #2c3e50;
+  font-size: 0.95rem;
+  margin-top: 1rem;
+  padding: 0.5rem 0.75rem;
+  background: linear-gradient(135deg, rgba(0, 128, 128, 0.1) 0%, rgba(0, 128, 128, 0.05) 100%);
+  border-left: 4px solid #008080;
+  border-radius: 4px;
+}
+
+.message-caps-header {
+  font-weight: 700;
+  color: #006666;
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+/* Typing cursor effect */
+.typing-active .formatted-message::after {
+  content: '|';
+  animation: blink 1s infinite;
+  color: #008080;
+  font-weight: bold;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
 .message-time {
   font-size: 0.7rem;
   color: #7f8c8d;
@@ -433,6 +594,61 @@
     font-size: 0.9rem;
   }
 
+  .message-header {
+    font-size: 0.875rem;
+  }
+
+  .message-section-header {
+    font-size: 0.925rem;
+  }
+
+  .message-info-row {
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .info-label {
+    font-size: 0.875rem;
+  }
+
+  .info-value {
+    font-size: 0.875rem;
+  }
+
+  .message-sub-info {
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-left: 1.25rem;
+  }
+
+  .sub-info-label {
+    font-size: 0.85rem;
+  }
+
+  .sub-info-value {
+    font-size: 0.85rem;
+  }
+
+  .message-bullet {
+    gap: 0.4rem;
+  }
+
+  .message-sub-bullet {
+    padding-left: 1.25rem;
+    font-size: 0.85rem;
+  }
+
+  .message-summary-header {
+    font-size: 0.875rem;
+    padding: 0.45rem 0.65rem;
+    margin-top: 0.75rem;
+  }
+
+  .message-caps-header {
+    font-size: 0.85rem;
+  }
+
   .chat-input-container {
     padding: 0.875rem;
   }
@@ -455,5 +671,50 @@
 
   .message-bubble {
     font-size: 0.875rem;
+  }
+
+  .message-header {
+    font-size: 0.825rem;
+  }
+
+  .message-section-header {
+    font-size: 0.875rem;
+  }
+
+  .message-info-row {
+    padding: 0.35rem 0.5rem;
+  }
+
+  .info-label,
+  .info-value {
+    font-size: 0.825rem;
+  }
+
+  .message-sub-info {
+    padding-left: 1rem;
+  }
+
+  .sub-info-label,
+  .sub-info-value {
+    font-size: 0.8rem;
+  }
+
+  .message-bullet {
+    gap: 0.35rem;
+    font-size: 0.875rem;
+  }
+
+  .message-sub-bullet {
+    padding-left: 1rem;
+    font-size: 0.8rem;
+  }
+
+  .message-summary-header {
+    font-size: 0.825rem;
+    padding: 0.4rem 0.55rem;
+  }
+
+  .message-caps-header {
+    font-size: 0.8rem;
   }
 }

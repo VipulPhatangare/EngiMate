@@ -61,6 +61,10 @@ app.use('/api/preferenceList', preferenceListRoutes);
 const collegePredictorRoutes = require('./routes/collegePredictor');
 app.use('/api/collegePredictor', collegePredictorRoutes);
 
+// Notification Routes
+const notificationRoutes = require('./routes/notifications');
+app.use('/api/notifications', notificationRoutes);
+
 
 // Start server
 app.listen(PORT, () => {

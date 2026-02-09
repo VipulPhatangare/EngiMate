@@ -11,12 +11,20 @@ function NotificationSlider() {
     const fetchNotifications = async () => {
       try {
         const response = await fetch(`${API_URL}/api/notifications/active`)
+        
+        // Check if response is ok before parsing JSON
+        if (!response.ok) {
+          console.warn('Notifications endpoint not available')
+          return
+        }
+        
         const data = await response.json()
         if (data.success && data.notifications.length > 0) {
           setNotifications(data.notifications)
         }
       } catch (error) {
-        console.error('Error fetching notifications:', error)
+        // Silently fail if notifications aren't available
+        console.debug('Notifications not loaded:', error.message)
       }
     }
     

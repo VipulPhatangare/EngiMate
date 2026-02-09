@@ -298,8 +298,10 @@ function Dashboard({ user, onLogout, onUserUpdate }) {
         </div>
       </footer>
 
-      {/* ChatBot - Available on all pages */}
-      <ChatBot />
+      {/* ChatBot - Only on main dashboard home page */}
+      {!selectedCollege && !showProfile && !showTopColleges && !showCollegePredictor && !showPreferenceList && (
+        <ChatBot />
+      )}
     </div>
   )
 }

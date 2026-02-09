@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import './AdminDashboard.css'
-import ChatBot from './ChatBot'
 import { API_URL } from '../utils/api'
 
 function AdminDashboard({ admin, onLogout }) {
@@ -542,9 +541,6 @@ function AdminDashboard({ admin, onLogout }) {
           )}
         </div>
       </div>
-
-      {/* ChatBot - Available in admin dashboard */}
-      <ChatBot />
     </div>
   )
 }

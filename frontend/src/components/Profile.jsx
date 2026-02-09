@@ -45,7 +45,9 @@ function Profile({ user, onBack, onUpdate }) {
   const fetchProfile = async () => {
     try {
       const response = await api.get('/api/auth/profile')
-      if (response.data.user) {
+      
+      // Check if response and data exist
+      if (response && response.data && response.data.user) {
         const userData = response.data.user
         setPersonalInfo({
           name: userData.name || '',
@@ -68,7 +70,7 @@ function Profile({ user, onBack, onUpdate }) {
         })
       }
     } catch (error) {
-      console.error('Error fetching profile:', error)
+      console.error('Error fetching profile:', error.message || error)
     }
   }
 
